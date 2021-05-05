@@ -1,9 +1,9 @@
 # Week ? Lab 2 Group 6 (dd/mm/21)
 
 ## Attendees
-Name:   Andy Scott - Daniel Cook - James Cal
+Name:   Andy Scott - Daniel Cook - Bella Shaw
 
-SID:               - 490394414 - 
+SID:               - 490394414 - 500554852
 
 ## Action Items from last meeting
 copy paste from last meeting

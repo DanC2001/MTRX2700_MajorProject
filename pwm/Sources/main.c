@@ -22,7 +22,7 @@ __interrupt void TOC2_ISR(void)
    TFLG1 = 0x04;	// reset pin 2 flag
 }
 
-void pwm(double period, double duty) {
+void main(double period, double duty) {
     
   // PWM signal on pin 2
   // Freq = 1Hz

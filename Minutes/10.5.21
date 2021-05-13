@@ -1,0 +1,28 @@
+# Week 10 Major Project Zoom Meeting (10/05/21)
+
+## Attendees
+Name:   Andy Scott - Daniel Cook - Bella Shaw
+
+SID:               - 490394414 - 500554852
+
+## Action Items from last meeting
+* LIDAR Module - Have the LIDAR tool able to make measurements for implementation in week 10 lab (Daniel and Andy)
+    * Timer still being worked on as of today
+* PWM Module - Have the PWM module able to both output PWM to servos and read PWM from LIDAR for integration in week 10 lab (Bella)
+    * PWM almost working
+    
+## Minutes
+* Updated each other on progress made over the weekend
+* Watched week 9 live tutorial
+* Continued working on tasks
+    * PWM almost finished and made modular (Bella)
+    * Speaker working, frequency of beeps increases as sensor gets closer to object (Andy)
+    * Continued working on timer (Dan)
+
+
+## Action items
+* Have PWM module finished by Thursday lab (Bella)
+* Have timer module finished before Thursday lab (Dan)
+* Start work on LIDAR once timer is finished (Andy)
+
+Aim for integration during week 10 lab

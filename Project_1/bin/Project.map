@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\dcoo8782\Documents\Project_1\bin\Project.abs"
+PROGRAM "C:\Users\andys\OneDrive\Desktop\Repo\Project_1\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -25,7 +25,7 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00B and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x1500     14
+  _Range   pZeroOut       0x1100     14
   _Copy    *toCopyDownBeg 0xC077
 } _startupData;
 
@@ -37,8 +37,8 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        10     R     0xC00B     0xC014   ROM_C000
 NON_BANKED                        98     R     0xC015     0xC076   ROM_C000
 .copy                              2     R     0xC077     0xC078   ROM_C000
-.text                            126     R   0x308000   0x30807D   PAGE_30
-.stack                          1280   R/W     0x1000     0x14FF   RAM
+.text                            121     R   0x308000   0x308078   PAGE_30
+.stack                           256   R/W     0x1000     0x10FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -381,12 +381,12 @@ NON_BANKED                        98     R     0xC015     0xC076   ROM_C000
 .abs_section_2ae                   2   N/I      0x2AE      0x2AF   .absSeg339
 .abs_section_2be                   2   N/I      0x2BE      0x2BF   .absSeg340
 .abs_section_ff80                126     R     0xFF80     0xFFFD   .absSeg341
-.common                           14   R/W     0x1500     0x150D   RAM
+.common                           14   R/W     0x1100     0x110D   RAM
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):         177 (dec:      375)
-READ_WRITE (R/W):      50E (dec:     1294)
+READ_ONLY (R):         172 (dec:      370)
+READ_WRITE (R/W):      10E (dec:      270)
 NO_INIT (N/I):         190 (dec:      400)
 
 *********************************************************************************************
@@ -584,7 +584,7 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN0TXTBPR                                17D       1       1       0   .abs_section_17d
      _PTT                                       240       1       1       0   .abs_section_240
      _PTIT                                      241       1       1       0   .abs_section_241
-     _DDRT                                      242       1       1       1   .abs_section_242
+     _DDRT                                      242       1       1       0   .abs_section_242
      _RDRT                                      243       1       1       0   .abs_section_243
      _PERT                                      244       1       1       0   .abs_section_244
      _PPST                                      245       1       1       0   .abs_section_245
@@ -745,26 +745,26 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308000      36      54       2   .text       
+     main                                    308000      31      49       2   .text       
 - VARIABLES:
-     overflow                                  1500       2       2       6   .common     
-     edge1                                     1502       2       2       6   .common     
-     diff                                      1504       2       2       4   .common     
-     prescalar                                 1506       2       2       1   .common     
-     TCR1Set                                   1508       2       2       1   .common     
-     pulse_width                               150A       4       4       2   .common     
+     overflow                                  1100       2       2       6   .common     
+     edge1                                     1102       2       2       6   .common     
+     diff                                      1104       2       2       4   .common     
+     prescalar                                 1106       2       2       1   .common     
+     TCR1Set                                   1108       2       2       1   .common     
+     pulse_width                               110A       4       4       2   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    308036      29      41       2   .text       
+     Init                                    308031      29      41       2   .text       
      _Startup                                  C000       B      11       0   .init       
 - VARIABLES:
      _startupData                              C00B       6       6       3   .startData  
 - LABELS:
-     __SEG_END_SSTACK                          1500       0       0       1               
+     __SEG_END_SSTACK                          1100       0       0       1               
 MODULE:                 -- Functions.c.o --
 - PROCEDURES:
-     enableTimer                             30805F       F      15       2   .text       
-     TCNTOF                                  30806E      10      16       4   .text       
+     enableTimer                             30805A       F      15       2   .text       
+     TCNTOF                                  308069      10      16       4   .text       
      tovisr                                    C015       C      12       1   NON_BANKED  
      tieC1I                                    C021      54      84       1   NON_BANKED  
 - VARIABLES:
@@ -779,11 +779,11 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
-  main.c.o                                    14     54      0
+  main.c.o                                    14     49      0
   Start12.c.o                                  0     52      0
   Functions.c.o                                0    127      0
   isr_vectors.c.o                              0      2    126
-  other                                     1280     12      2
+  other                                      256     12      2
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
@@ -1724,7 +1724,7 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN0TXTSR                                 17E       2       2       0   .abs_section_17e
      _PTT                                       240       1       1       0   .abs_section_240
      _PTIT                                      241       1       1       0   .abs_section_241
-     _DDRT                                      242       1       1       1   .abs_section_242
+     _DDRT                                      242       1       1       0   .abs_section_242
      _RDRT                                      243       1       1       0   .abs_section_243
      _PERT                                      244       1       1       0   .abs_section_244
      _PPST                                      245       1       1       0   .abs_section_245
@@ -1826,21 +1826,21 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
-     overflow                                  1500       2       2       6   .common     
-     edge1                                     1502       2       2       6   .common     
-     diff                                      1504       2       2       4   .common     
-     prescalar                                 1506       2       2       1   .common     
-     TCR1Set                                   1508       2       2       1   .common     
-     pulse_width                               150A       4       4       2   .common     
+     overflow                                  1100       2       2       6   .common     
+     edge1                                     1102       2       2       6   .common     
+     diff                                      1104       2       2       4   .common     
+     prescalar                                 1106       2       2       1   .common     
+     TCR1Set                                   1108       2       2       1   .common     
+     pulse_width                               110A       4       4       2   .common     
      _Startup                                  C000       B      11       0   .init       
      tovisr                                    C015       C      12       1   NON_BANKED  
      tieC1I                                    C021      54      84       1   NON_BANKED  
      UnimplementedISR                          C075       2       2      61   NON_BANKED  
      _vect                                     FF80      7E     126       0   .abs_section_ff80
-     main                                    308000      36      54       2   .text       
-     Init                                    308036      29      41       2   .text       
-     enableTimer                             30805F       F      15       2   .text       
-     TCNTOF                                  30806E      10      16       4   .text       
+     main                                    308000      31      49       2   .text       
+     Init                                    308031      29      41       2   .text       
+     enableTimer                             30805A       F      15       2   .text       
+     TCNTOF                                  308069      10      16       4   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -1865,7 +1865,7 @@ tieC1I                    USES _TFLG2 TCNTOF edge1 _TC1 overflow diff
                                 pulse_width 
 _vect                     USES UnimplementedISR tovisr tieC1I 
 main                      USES prescalar TCR1Set edge1 enableTimer _TIOS 
-                                _TCTL4 _TFLG1 _TIE _DDRT 
+                                _TCTL4 _TFLG1 _TIE 
 Init                      USES _startupData 
 enableTimer               USES _TSCR1 _TSCR2 _TFLG2 
 TCNTOF                    USES _TSCR2 
@@ -1902,5 +1902,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 7
-Total size of all blocks to be downloaded: 375
+Total size of all blocks to be downloaded: 370
 

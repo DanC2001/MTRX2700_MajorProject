@@ -6,12 +6,14 @@
 // WARNING: Remember to alter required file depending if in simulation or hardware!
 
 // Global Variables
-unsigned overflow, edge1, diff, prescalar, TCR1Set; 
+unsigned overflow, edge1, diff, prescalar, TCR1Set, NewMeasure; 
 unsigned long pulse_width;
 
 
 
 void main(void) {
+  volatile float distance = 0;
+  
 /*
   prescalar = 0x02;
   TCR1Set   = 0x80;
@@ -42,6 +44,11 @@ void main(void) {
 
 
   for(;;) {
+    //if(NewMeasure == 1){
+      //convertTimerToTime(0x02, pulse_width, overflow, &distance);
+      //convertTimeToDist(&distance);
+      /*NewMeasure = 0;
+    } */
     _FEED_COP(); /* feeds the dog */
   } /* loop forever */
   /* please make sure that you never leave main */

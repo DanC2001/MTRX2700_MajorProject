@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "derivative.h"      /* derivative-specific definitions */
 
-extern unsigned overflow, edge1, diff, prescalar, TCR1Set; 
+extern unsigned overflow, edge1, diff, prescalar, TCR1Set, NewMeasure; 
 extern unsigned long pulse_width;
 
 void init_TC1(void){
@@ -37,15 +37,14 @@ void enableTimer(int cr1, int cr2){
    TFLG2 = 0x80;  // Clear the TOF flag       
 } 
 
-/*
-int convertTimerToTime(int prescalar, unsigned timer, float* output){
+void convertTimerToTime(int prescalar, unsigned timer, unsigned overflow, float* output){
    
    long Eclock = 24000000;    // 24MHz
    volatile double perStep;
    volatile double time;
    
    // gets time value for each clock tick
-   switch(prescalar){         // what is the prescaler?
+   switch(prescalar){        // what is the prescaler?
     case 0x00:  //000
       perStep = Eclock;
       break;
@@ -80,14 +79,23 @@ int convertTimerToTime(int prescalar, unsigned timer, float* output){
       
    }
    
-   time = timer * (1/perStep);  // Seconds
+   time = (timer + (overflow * 65536u)) * (1/perStep);  // Seconds
    time = time*1000;            // Miliseconds  (ms)
-   time = time*1000;            // Microseconds (µs)
+   // time = time*1000;            // Microseconds (µs)
    
-   *output = time;
-   return 1;               
+   *output = time;         
 }
-*/
+
+void convertTimeToDist(float* Output){
+  // Takes in a pointer to a number representing a period in ms and converts it to a distance
+  volatile float Calibrate = 1; // What is the distance in meters per ms of period.
+  
+  *Output = *Output * Calibrate;
+    
+}
+
+
+
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void TOV_ISR(void) { 
   //volatile int misc;
@@ -101,7 +109,7 @@ __interrupt void TC1_ISR(void) {
   // At the start of this code, enable interrupts for timer overflow?
   
   // Make LED turn on or something so know that this has been executed?
-  
+  TFLG2_TOF = 1;
   TCNTOF(0x01);         // Turn on TCNT Overflow
   if(edge1 == 0){       // If it is Rising edge (Hasn't measured pulse yet)
     edge1 = TC1;          // Save TCNT to edge 1
@@ -115,6 +123,7 @@ __interrupt void TC1_ISR(void) {
       overflow -= 1;      // Remove an overflow count
     }
     pulse_width = (long)overflow * 65536u + (long)diff;
+    //NewMeasure = 1;
     edge1 = 0;
   }
   

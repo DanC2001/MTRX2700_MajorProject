@@ -2,7 +2,8 @@
 #define FUNCTIONS_HEADER
 
 void enableTimer(int cr1, int cr2);
-//int convertTimerToTime(int prescalar, unsigned timer, float* output);
+void convertTimerToTime(int prescalar, unsigned timer, unsigned overflow, float* output);
+void convertTimeToDist(float* Output);
 void init_TC1(void);
 void TCNTOF(unsigned enable);
 __interrupt void TOV_ISR(void);

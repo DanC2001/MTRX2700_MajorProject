@@ -9,8 +9,8 @@ void main(void) {
   float current_period, dutyCycle, dcValue;
   float periodValue; // previousPeriod, nextPeriod;
   int polarity;
-  int max_period = 2000;
-  int min_period = 1000;
+  int max_period = 1900;
+  int min_period = 1100;
   int right_moving_flag = 1;
   int increment = 100;
   
@@ -25,7 +25,7 @@ void main(void) {
   PWMCAE = 1;           // PWM5 centre aligned
   //PWMPRCLK = 1;         // prescaler set to 2
  
-  PWMPRCLK = 0;     // Try without prescaler 
+  PWMPRCLK =0;     // Try without prescaler 
   PWMSCLA = 0;
   PWMSCLB = 0;  // Set scalers to 0, in this setting clock is divided by 512 according to datasheet
   
@@ -40,14 +40,14 @@ void main(void) {
       
     // calculate values for period and duty cycle values given
   
-    //periodValue = current_period * (24/(2 * 2));  // calculate period value from prescaler and period
-      periodValue = current_period/512;
+    periodValue = current_period * (24/(1 * 2));  // calculate period value from prescaler and period
+    //  periodValue = current_period/512;
   
   
     // calculate duty cycle value from duty cycle, polarity and period value
     if (polarity == 1) {
     
-      dcValue = (dutyCycle * 0.01) * (periodValue);   // wtf
+      dcValue = (dutyCycle * 0.01) * (periodValue);  
     }
     else if (polarity == 0) {
     
@@ -103,40 +103,7 @@ void main(void) {
       
     }
     
-    
-    
-    /*
-    // if the servo is currently at 0 or 180, the next position should be 90
-    if (currentPeriod == 500 || currentPeriod == 2500) {
-      
-      nextPeriod = 1500; 
-    } 
-    
-    // if the servo is currently at 90 and was just at 0, the next position should be 180
-    else if (previousPeriod == 500 && currentPeriod == 1500) {
-      
-      nextPeriod = 2500; 
-    } 
-    
-    // if the servo is currently at 90 and was just at 180, the next position should be 0
-    else if (previousPeriod == 2500 && currentPeriod == 1500) {
-      
-      nextPeriod = 500;
-    } 
-    
-    // reset the servo to 0 if anything else has happened
-    else {
-    
-      nextPeriod = 500;
-    }
-    
-    previousPeriod = currentPeriod;
-    currentPeriod = nextPeriod;
-   */ 
-     _FEED_COP();
-    
-
-    
+    _FEED_COP(); /* feeds the dog */
     
   }
   
@@ -144,8 +111,10 @@ void main(void) {
 	EnableInterrupts;
 
 
-  for(;;) {
+     for(;;) {
     _FEED_COP(); /* feeds the dog */
   } /* loop forever */
   /* please make sure that you never leave main */
+
+
 }

@@ -32,7 +32,7 @@ void main(void) {
   
   // set period and duty cycle for servo to start at 0 degrees
  // previousPeriod = 500;
-  current_period = 1500;        //microseconds (0.5 ms)
+ // current_period = 1500;        //microseconds (0.5 ms)
  // nextPeriod = 500;
   dutyCycle = 50;     // percent
   
@@ -40,18 +40,18 @@ void main(void) {
       
     // calculate values for period and duty cycle values given
   
-    periodValue = current_period * (24/(1 * 2));  // calculate period value from prescaler and period
-    //  periodValue = current_period/512;
+    //periodValue = current_period * (24/(1 * 2))*5;  // calculate period value from prescaler and period
+    periodValue = 1000;
   
   
     // calculate duty cycle value from duty cycle, polarity and period value
     if (polarity == 1) {
     
-      dcValue = (dutyCycle * 0.01) * (periodValue);  
+      dcValue = (dutyCycle/periodValue)*0.01;  
     }
     else if (polarity == 0) {
     
-      dcValue = periodValue - ((dutyCycle * 0.01) * periodValue);
+      dcValue = (periodValue - (dutyCycle * periodValue))*0.01;
     } 
         
     
@@ -63,7 +63,7 @@ void main(void) {
     PWME = PWME | 0x20; // enable PWM channel 5
     
     // reset period based on current and previous location
-    
+    /*
     // If servo is moving to right then try to increase period
     if(right_moving_flag == 1){
       
@@ -102,7 +102,7 @@ void main(void) {
       }     
       
     }
-    
+    */
     _FEED_COP(); /* feeds the dog */
     
   }

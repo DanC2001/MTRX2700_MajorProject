@@ -44,11 +44,11 @@ void main(void) {
 
 
   for(;;) {
-    //if(NewMeasure == 1){
-      //convertTimerToTime(0x02, pulse_width, overflow, &distance);
-      //convertTimeToDist(&distance);
-      /*NewMeasure = 0;
-    } */
+    if(NewMeasure == 1){
+      convertTimerToTime(0x02, pulse_width, overflow, &distance);
+      convertTimeToDist(&distance);
+      NewMeasure = 0;
+    } 
     _FEED_COP(); /* feeds the dog */
   } /* loop forever */
   /* please make sure that you never leave main */

@@ -15,24 +15,24 @@ void main(void)
   
   /* put your own code here */
   int duty_cycle = 50;
-  int PWM_frequency = 15000; //15000 should give resulting freq of 800hz = 1.3ms, 20000 should give 600hz = 1.7ms
-  int clock = 12*1000*1000; // Clock is 24Mhz/prescaler = 24e6/2
+  int target_freq = 800; //Hz //15000 should give resulting freq of 800hz = 1.3ms, 20000 should give 600hz = 1.7ms
+  int clock_freq = 12*1000*1000; // Clock is 24Mhz/prescaler = 24e6/2
   
-  PWMPRCLK = 0x01; //Prescaler to 1, results in division by 2    	
+  PWMPRCLK = 0x01; //Prescaler 	
 //	PWMSCLA = 125; 	       //ClockSA=1.5MHz/2x125=6000 Hz
   //PWMSCLA = 1;
 	PWMCLK = 0b00000000; 	// select clock A as the source
 	PWMPOL = 0b11111111; 		     //high then low for polarity
-	PWMCAE = 0x0; 		     //left aligned
+	PWMCAE = 0x00; 		     //left aligned
 	PWMCTL = 0x0C;	         //8-bit chan, PWM during freeze and wait
-  PWME = 0b00100000; 	         //Enable channel 5 PWM
 
-	PWMPER5 = PWM_frequency; 	       //PWM_Freq=ClockSA/100=6000Hz/100=60Hz. CHANGE THIS
-	PWMDTY5 = duty_cycle*PWM_frequency/100; 	       //50% duty cycle           AND THIS TO SEE THE EFFECT ON MOTOR. TRY LESS THAN 10%
+	PWMPER5 = clock_freq/target_freq; 	       //PWM_Freq=ClockSA/100=6000Hz/100=60Hz. CHANGE THIS
+	PWMDTY5 = clock_freq/target_freq/2; 	       //50% duty cycle           AND THIS TO SEE THE EFFECT ON MOTOR. TRY LESS THAN 10%
 
   PWMCNT5 = 0x0;         // reset counter
-  
-  while(1);            //stay here forever
+  PWME = 0b11111111; 	         //Enable channel 5 PWM
+
+  //while(1);            //stay here forever
   
   /*while (1) {
       

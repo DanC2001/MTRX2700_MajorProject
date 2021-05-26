@@ -34,14 +34,13 @@ void main(void) {
   //TCNTOF(0x01);                   // Enables TCNT Overflow interrupt
   
   
+  //TSCR2 |= 0x80; // Enable TCNT overflow interrupt
   
            
   EnableInterrupts;
   
   
   /* put your own code here */
-  
-
 
   for(;;) {
     if(NewMeasure == 1){

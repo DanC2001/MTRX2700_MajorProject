@@ -95,6 +95,40 @@ void convertTimeToDist(float* Output){
 }
 
 
+ int getRange(void){
+
+    int distance;
+    // Set overflow to zero
+    overflow = 0;
+    // Set up timer to capture rising edge
+    TSCR1 = 0x90; // Enable timer counter, enable fast flag clear
+    TSCR2 = 0x00; // Disable overflow interrupt, prescalar stays at 0
+                  // Prescalar has to remain 0 due to its use in interrupts
+                  
+    TIOS &= ~0x02;// Switch IOS1 to input-capture and leave other timers alone
+    TCTL4 = 0x04; // Capture on RISING edge only of PT1
+    TFLG1 = 0x02; // Write a 1 to the interrupt flag register for PT1, clearing it
+    // Wait for rising edge 
+    while(!(TFLG1 & 0x02)); // Wait until the first rising edge triggers TFLG1 for PT1
+    TFLG2 = 0x80; // Clear the timer overflow flag
+    TSCR2|= 0x80; // Turn on the Timer overflow interrupt bit                                          // Can interrupt from overflow
+    edge1 = TC1; // Save the time the rising edge was recorded, and clear the C1F flag from TFLG1
+    TCTL4 = 0x08; // Capture on FALLING edge only of PT1
+    // Time until falling edge
+    while(!(TFLG1 & 0x02)); // Wait until the falling edge triggers the TFLG1 flag
+    diff = TC1 - edge1; // How many clock cycles pulse was high for disregarding overflow
+    if(edge1 < TC1){  // If the time that the edge fell was recorded 'before' it rose, then:
+      overflow -= 1; // Subtract 1 from overflow
+    }
+    
+    pulseWidth = (long)overflow * 65536u + (long)diff;
+    
+    convertTimerToTime(0x00, pulse_width, overflow, &distance);
+    convertTimeToDist(&distance);
+    
+    return distance;
+ }
+
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void TOV_ISR(void) { 

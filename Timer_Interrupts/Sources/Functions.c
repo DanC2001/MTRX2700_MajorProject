@@ -144,7 +144,8 @@ __interrupt void TC1_ISR(void) {
   
   // Make LED turn on or something so know that this has been executed?
   TFLG2_TOF = 1;
-  TCNTOF(0x01);         // Turn on TCNT Overflow
+  //TCNTOF(0x01);         // Turn on TCNT Overflow
+  TSCR2 |= 0x80; // Enable TCNT overflow interrupt
   if(edge1 == 0){       // If it is Rising edge (Hasn't measured pulse yet)
     edge1 = TC1;          // Save TCNT to edge 1
     overflow = 0;         // Set overflow counter to 0
@@ -152,12 +153,13 @@ __interrupt void TC1_ISR(void) {
   }
   else{                 // If not rising must be falling
     diff = TC1 - edge1;   // Gets the difference between TCNT of falling and TCNT of rising
-    TCNTOF(0x00);         // Disables the TCNT overflow
-    if(TC1 < edge1){      // If it is smaller than edge 1
+    //TCNTOF(0x00);         // Disables the TCNT overflow
+    //TSCR2 &=~0x80; // Disable TCNT overflow interrupt
+   /* if(TC1 < edge1){      // If it is smaller than edge 1
       overflow -= 1;      // Remove an overflow count
-    }
+    } */
     pulse_width = (long)overflow * 65536u + (long)diff;
-    //NewMeasure = 1;
+    NewMeasure = 1;
     edge1 = 0;
   }
   

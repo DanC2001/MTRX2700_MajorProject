@@ -6,13 +6,15 @@ void main(void) {
 
   // pwm ch5 (clock A) and ch7 (clock B)
 
-  float period, dutyCycle, dcValue ;
-  float periodValue;
+  int period, dutyCycle, dcValue ;
+  int output_period;
   int polarity;
+  //float clock_period;
+  
   
   polarity = 1;       // 1 or 0 to start high or low respectively
-  periodValue = 6000;        //microseconds
-  dutyCycle = 60;     // percent
+  period = 1000;        //microseconds
+  dutyCycle = 50;     // percent
   
   // set up PWM
   PWMCLK = 0;           // clock A as source clock
@@ -21,6 +23,8 @@ void main(void) {
   PWMCAE = 1;           // PWM5 centre aligned
   PWMPRCLK = 1;         // prescaler set to 2
   
+  output_period = period;
+  
   
   // calculate values for period and duty cycle values given
   
@@ -28,18 +32,20 @@ void main(void) {
   
   
   // calculate duty cycle value from duty cycle, polarity and period value
-  if (polarity = 1) {
+  if (polarity == 1) {
     
-    dcValue = (dutyCycle * 0.01) * (periodValue);   // wtf
+    dcValue = (dutyCycle * 0.01) * (period);   // wtf
+   // dcValue = (dutyCycle/periodValue)*0.01;
   }
-  else if (polarity = 0) {
+  else if (polarity == 0) {
     
-    dcValue = periodValue - ((dutyCycle * 0.01) * periodValue);
+    dcValue = period - ((dutyCycle * 0.01) * period);
+    //dcValue = (periodValue-dutyCycle)/periodValue*0.01;
   }
   
     
   // set the period and duty cycle values
-  PWMPER5 = periodValue;    
+  PWMPER5 = output_period;    
   PWMDTY5 = dcValue;
   
   PWME = PWME | 0x20; // enable PWM channel 5

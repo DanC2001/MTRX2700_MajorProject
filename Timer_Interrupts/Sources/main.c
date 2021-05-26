@@ -33,9 +33,8 @@ void main(void) {
   
   //TCNTOF(0x01);                   // Enables TCNT Overflow interrupt
   
-  
-  //TSCR2 |= 0x80; // Enable TCNT overflow interrupt
-  
+  TSCR2 |= 0x80; // Enable TCNT overflow interrupt
+  TFLG2  = 0x80; // clear TOF flag
            
   EnableInterrupts;
   

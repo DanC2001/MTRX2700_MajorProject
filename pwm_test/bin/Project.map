@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "\\Mac\Home\Documents\pwm_test\bin\Project.abs"
+PROGRAM "C:\Users\andys\OneDrive\Desktop\Repo\pwm_test\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -15,25 +15,33 @@ FILE SECTION
 mc9s12dg256.c.o                         Model: BANKED,        Lang: ANSI-C
 main.c.o                                Model: BANKED,        Lang: ANSI-C
 Start12.c.o                             Model: BANKED,        Lang: ANSI-C
+FADD.C.o (ansibf.lib)                   Model: BANKED,        Lang: ANSI-C
+FCMP.C.o (ansibf.lib)                   Model: BANKED,        Lang: ANSI-C
+FCONV.C.o (ansibf.lib)                  Model: BANKED,        Lang: ANSI-C
+FMUL.C.o (ansibf.lib)                   Model: BANKED,        Lang: ANSI-C
+FREGS.C.o (ansibf.lib)                  Model: BANKED,        Lang: ANSI-C
+rtshc12.c.o (ansibf.lib)                Model: BANKED,        Lang: ANSI-C
+VREGS.C.o (ansibf.lib)                  Model: BANKED,        Lang: ANSI-C
 
 *********************************************************************************************
 STARTUP SECTION
 ---------------------------------------------------------------------------------------------
 Entry point: 0xC000 (_Startup)
-_startupData is allocated at 0xC00B and uses 6 Bytes
+_startupData is allocated at 0xC015 and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     0
-  _Copy    *toCopyDownBeg 0xC015
+  _Copy    *toCopyDownBeg 0xC284
 } _startupData;
 
 *********************************************************************************************
 SECTION-ALLOCATION SECTION
 Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
-.init                             11     R     0xC000     0xC00A   ROM_C000
-.startData                        10     R     0xC00B     0xC014   ROM_C000
-.copy                              2     R     0xC015     0xC016   ROM_C000
-.text                             81     R   0x308000   0x308050   PAGE_30
+.init                             21     R     0xC000     0xC014   ROM_C000
+.startData                        10     R     0xC015     0xC01E   ROM_C000
+NON_BANKED                       613     R     0xC01F     0xC283   ROM_C000
+.copy                              2     R     0xC284     0xC285   ROM_C000
+.text                            390     R   0x308000   0x308185   PAGE_30
 .stack                           256   R/W     0x1000     0x10FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -379,7 +387,7 @@ Section Name                    Size  Type     From       To       Segment
 .vectSeg341_vect                   2     R     0xFFFE     0xFFFF   .vectSeg341
 
 Summary of section sizes per section type:
-READ_ONLY (R):          6A (dec:      106)
+READ_ONLY (R):         40E (dec:     1038)
 READ_WRITE (R/W):      100 (dec:      256)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -464,11 +472,11 @@ MODULE:                 -- mc9s12dg256.c.o --
      _PORTAD0                                    8F       1       1       0   .abs_section_8f
      _PWME                                       A0       1       1       1   .abs_section_a0
      _PWMPOL                                     A1       1       1       1   .abs_section_a1
-     _PWMCLK                                     A2       1       1       1   .abs_section_a2
+     _PWMCLK                                     A2       1       1       0   .abs_section_a2
      _PWMPRCLK                                   A3       1       1       1   .abs_section_a3
      _PWMCAE                                     A4       1       1       1   .abs_section_a4
-     _PWMCTL                                     A5       1       1       1   .abs_section_a5
-     _PWMSCLA                                    A8       1       1       1   .abs_section_a8
+     _PWMCTL                                     A5       1       1       2   .abs_section_a5
+     _PWMSCLA                                    A8       1       1       0   .abs_section_a8
      _PWMSCLB                                    A9       1       1       0   .abs_section_a9
      _PWMSDN                                     C4       1       1       0   .abs_section_c4
      _SCI0CR1                                    CA       1       1       0   .abs_section_ca
@@ -599,7 +607,7 @@ MODULE:                 -- mc9s12dg256.c.o --
      _MODRR                                     257       1       1       0   .abs_section_257
      _PTP                                       258       1       1       0   .abs_section_258
      _PTIP                                      259       1       1       0   .abs_section_259
-     _DDRP                                      25A       1       1       0   .abs_section_25a
+     _DDRP                                      25A       1       1       1   .abs_section_25a
      _RDRP                                      25B       1       1       0   .abs_section_25b
      _PERP                                      25C       1       1       0   .abs_section_25c
      _PPSP                                      25D       1       1       0   .abs_section_25d
@@ -711,16 +719,16 @@ MODULE:                 -- mc9s12dg256.c.o --
      _ATD0DR7                                    9E       2       2       0   .abs_section_9e
      _PWMCNT01                                   AC       2       2       0   .abs_section_ac
      _PWMCNT23                                   AE       2       2       0   .abs_section_ae
-     _PWMCNT45                                   B0       2       2       1   .abs_section_b0
+     _PWMCNT45                                   B0       2       2       0   .abs_section_b0
      _PWMCNT67                                   B2       2       2       0   .abs_section_b2
      _PWMPER01                                   B4       2       2       0   .abs_section_b4
      _PWMPER23                                   B6       2       2       0   .abs_section_b6
      _PWMPER45                                   B8       2       2       1   .abs_section_b8
-     _PWMPER67                                   BA       2       2       0   .abs_section_ba
+     _PWMPER67                                   BA       2       2       1   .abs_section_ba
      _PWMDTY01                                   BC       2       2       0   .abs_section_bc
      _PWMDTY23                                   BE       2       2       0   .abs_section_be
-     _PWMDTY45                                   C0       2       2       1   .abs_section_c0
-     _PWMDTY67                                   C2       2       2       0   .abs_section_c2
+     _PWMDTY45                                   C0       2       2       2   .abs_section_c0
+     _PWMDTY67                                   C2       2       2       2   .abs_section_c2
      _SCI0BD                                     C8       2       2       0   .abs_section_c8
      _SCI1BD                                     D0       2       2       0   .abs_section_d0
      _ATD1CTL23                                 122       2       2       0   .abs_section_122
@@ -739,33 +747,91 @@ MODULE:                 -- mc9s12dg256.c.o --
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    308000      28      40       2   .text       
+     move_servos                             308000      7F     127       2   .text       
+     initialise_servos                       30807F      14      20       2   .text       
+     initialise_PWM                          308093      1C      28       2   .text       
+     ms_delay                                3080AF      2C      44       2   .text       
+     main                                    3080DB      82     130       2   .text       
 - VARIABLES:
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    308028      29      41       2   .text       
-     _Startup                                  C000       B      11       0   .init       
+     Init                                    30815D      29      41       2   .text       
+     _Startup                                  C000      15      21       0   .init       
 - VARIABLES:
-     _startupData                              C00B       6       6       3   .startData  
+     _startupData                              C015       6       6       3   .startData  
 - LABELS:
      __SEG_END_SSTACK                          1100       0       0       1               
+MODULE:                 -- FADD.C.o (ansibf.lib) --
+- PROCEDURES:
+     F_ADDKL                                   C01F      67     103       1   NON_BANKED  
+     _FADD                                     C086      15      21       2   NON_BANKED  
+- VARIABLES:
+MODULE:                 -- FCMP.C.o (ansibf.lib) --
+- PROCEDURES:
+     _FCMP                                     C09B      26      38       2   NON_BANKED  
+- VARIABLES:
+MODULE:                 -- FCONV.C.o (ansibf.lib) --
+- PROCEDURES:
+     F_TOLONGK                                 C0C1      33      51       1   NON_BANKED  
+     F_FRLONGK                                 C0F4      1F      31       1   NON_BANKED  
+     _FSFLOAT                                  C113      12      18       1   NON_BANKED  
+     _FSTRUNC                                  C125      11      17       1   NON_BANKED  
+     _FUTRUNC                                  C136       3       3       2   NON_BANKED  
+- VARIABLES:
+MODULE:                 -- FMUL.C.o (ansibf.lib) --
+- PROCEDURES:
+     F_MULKL                                   C139      58      88       1   NON_BANKED  
+     _FMUL                                     C191      14      20       2   NON_BANKED  
+- VARIABLES:
+MODULE:                 -- FREGS.C.o (ansibf.lib) --
+- PROCEDURES:
+     F_PULK                                    C1A5      15      21       3   NON_BANKED  
+     F_PULL                                    C1BA      15      21       2   NON_BANKED  
+     F_PSHK                                    C1CF      13      19       3   NON_BANKED  
+     F_XGKL                                    C1E2      21      33       2   NON_BANKED  
+     F_CLRK                                    C203       B      11       2   NON_BANKED  
+     F_MAXK                                    C20E       9       9       1   NON_BANKED  
+     F_NORMK                                   C217      3E      62       2   NON_BANKED  
+- VARIABLES:
+MODULE:                 -- rtshc12.c.o (ansibf.lib) --
+- PROCEDURES:
+     _NEG_P                                    C255       F      15       1   NON_BANKED  
+     _ILSEXT                                   C264       7       7       1   NON_BANKED  
+- VARIABLES:
+MODULE:                 -- VREGS.C.o (ansibf.lib) --
+- PROCEDURES:
+     L_NEGK                                    C26B       7       7       2   NON_BANKED  
+     L_PSHK                                    C272       8       8       1   NON_BANKED  
+     SL_PULK                                   C27A       A      10       1   NON_BANKED  
+- VARIABLES:
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
-  main.c.o                                     0     40      0
-  Start12.c.o                                  0     52      0
+  main.c.o                                     0    349      0
+  Start12.c.o                                  0     62      0
+  FADD.C.o (ansibf.lib)                        0    124      0
+  FCMP.C.o (ansibf.lib)                        0     38      0
+  FCONV.C.o (ansibf.lib)                       0    120      0
+  FMUL.C.o (ansibf.lib)                        0    108      0
+  FREGS.C.o (ansibf.lib)                       0    176      0
+  rtshc12.c.o (ansibf.lib)                     0     22      0
+  VREGS.C.o (ansibf.lib)                       0     25      0
   other                                      256     12      2
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main Init 
+  move_servos initialise_servos initialise_PWM ms_delay main Init 
 SECTION: ".init"
   _Startup 
+SECTION: "NON_BANKED"
+  F_ADDKL _FADD _FCMP F_TOLONGK F_FRLONGK _FSFLOAT _FSTRUNC _FUTRUNC F_MULKL 
+  _FMUL F_PULK F_PULL F_PSHK F_XGKL F_CLRK F_MAXK F_NORMK _NEG_P _ILSEXT L_NEGK 
+  L_PSHK SL_PULK 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -1552,24 +1618,24 @@ OBJECT LIST SORTED BY ADDRESS
      _ATD0DR7                                    9E       2       2       0   .abs_section_9e
      _PWME                                       A0       1       1       1   .abs_section_a0
      _PWMPOL                                     A1       1       1       1   .abs_section_a1
-     _PWMCLK                                     A2       1       1       1   .abs_section_a2
+     _PWMCLK                                     A2       1       1       0   .abs_section_a2
      _PWMPRCLK                                   A3       1       1       1   .abs_section_a3
      _PWMCAE                                     A4       1       1       1   .abs_section_a4
-     _PWMCTL                                     A5       1       1       1   .abs_section_a5
-     _PWMSCLA                                    A8       1       1       1   .abs_section_a8
+     _PWMCTL                                     A5       1       1       2   .abs_section_a5
+     _PWMSCLA                                    A8       1       1       0   .abs_section_a8
      _PWMSCLB                                    A9       1       1       0   .abs_section_a9
      _PWMCNT01                                   AC       2       2       0   .abs_section_ac
      _PWMCNT23                                   AE       2       2       0   .abs_section_ae
-     _PWMCNT45                                   B0       2       2       1   .abs_section_b0
+     _PWMCNT45                                   B0       2       2       0   .abs_section_b0
      _PWMCNT67                                   B2       2       2       0   .abs_section_b2
      _PWMPER01                                   B4       2       2       0   .abs_section_b4
      _PWMPER23                                   B6       2       2       0   .abs_section_b6
      _PWMPER45                                   B8       2       2       1   .abs_section_b8
-     _PWMPER67                                   BA       2       2       0   .abs_section_ba
+     _PWMPER67                                   BA       2       2       1   .abs_section_ba
      _PWMDTY01                                   BC       2       2       0   .abs_section_bc
      _PWMDTY23                                   BE       2       2       0   .abs_section_be
-     _PWMDTY45                                   C0       2       2       1   .abs_section_c0
-     _PWMDTY67                                   C2       2       2       0   .abs_section_c2
+     _PWMDTY45                                   C0       2       2       2   .abs_section_c0
+     _PWMDTY67                                   C2       2       2       2   .abs_section_c2
      _PWMSDN                                     C4       1       1       0   .abs_section_c4
      _SCI0BD                                     C8       2       2       0   .abs_section_c8
      _SCI0CR1                                    CA       1       1       0   .abs_section_ca
@@ -1713,7 +1779,7 @@ OBJECT LIST SORTED BY ADDRESS
      _MODRR                                     257       1       1       0   .abs_section_257
      _PTP                                       258       1       1       0   .abs_section_258
      _PTIP                                      259       1       1       0   .abs_section_259
-     _DDRP                                      25A       1       1       0   .abs_section_25a
+     _DDRP                                      25A       1       1       1   .abs_section_25a
      _RDRP                                      25B       1       1       0   .abs_section_25b
      _PERP                                      25C       1       1       0   .abs_section_25c
      _PPSP                                      25D       1       1       0   .abs_section_25d
@@ -1794,18 +1860,67 @@ OBJECT LIST SORTED BY ADDRESS
      _CAN4TXDLR                                 2BC       1       1       0   .abs_section_2bc
      _CAN4TXTBPR                                2BD       1       1       0   .abs_section_2bd
      _CAN4TXTSR                                 2BE       2       2       0   .abs_section_2be
-     _Startup                                  C000       B      11       0   .init       
-     main                                    308000      28      40       2   .text       
-     Init                                    308028      29      41       2   .text       
+     _Startup                                  C000      15      21       0   .init       
+     F_ADDKL                                   C01F      67     103       1   NON_BANKED  
+     _FADD                                     C086      15      21       2   NON_BANKED  
+     _FCMP                                     C09B      26      38       2   NON_BANKED  
+     F_TOLONGK                                 C0C1      33      51       1   NON_BANKED  
+     F_FRLONGK                                 C0F4      1F      31       1   NON_BANKED  
+     _FSFLOAT                                  C113      12      18       1   NON_BANKED  
+     _FSTRUNC                                  C125      11      17       1   NON_BANKED  
+     _FUTRUNC                                  C136       3       3       2   NON_BANKED  
+     F_MULKL                                   C139      58      88       1   NON_BANKED  
+     _FMUL                                     C191      14      20       2   NON_BANKED  
+     F_PULK                                    C1A5      15      21       3   NON_BANKED  
+     F_PULL                                    C1BA      15      21       2   NON_BANKED  
+     F_PSHK                                    C1CF      13      19       3   NON_BANKED  
+     F_XGKL                                    C1E2      21      33       2   NON_BANKED  
+     F_CLRK                                    C203       B      11       2   NON_BANKED  
+     F_MAXK                                    C20E       9       9       1   NON_BANKED  
+     F_NORMK                                   C217      3E      62       2   NON_BANKED  
+     _NEG_P                                    C255       F      15       1   NON_BANKED  
+     _ILSEXT                                   C264       7       7       1   NON_BANKED  
+     L_NEGK                                    C26B       7       7       2   NON_BANKED  
+     L_PSHK                                    C272       8       8       1   NON_BANKED  
+     SL_PULK                                   C27A       A      10       1   NON_BANKED  
+     move_servos                             308000      7F     127       2   .text       
+     initialise_servos                       30807F      14      20       2   .text       
+     initialise_PWM                          308093      1C      28       2   .text       
+     ms_delay                                3080AF      2C      44       2   .text       
+     main                                    3080DB      82     130       2   .text       
+     Init                                    30815D      29      41       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
+NOT USED PROCEDURES
+main.c.o:
+  scan_distanc 
+FADD.C.o (ansibf.lib):
+  _FSUB _FINC _FDEC _FNEG _FABS 
+FCONV.C.o (ansibf.lib):
+  _FUFLOAT 
+FMUL.C.o (ansibf.lib):
+  F_DIVKL _FDIV 
+FREGS.C.o (ansibf.lib):
+  F_STAL F_TLK F_TKL F_CLRL 
+rtshc12.c.o (ansibf.lib):
+  _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
+  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LINC 
+  _LDEC _LMUL _LMULU16x32 _LMULS16x32 _lDivMod _LDIVU _LDIVS _LMODU _LMODS 
+  _COPY _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE 
+  _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL 
+  _FPCMP 
+VREGS.C.o (ansibf.lib):
+  UL_PULK 
+NOT USED VARIABLES
+rtshc12.c.o (ansibf.lib):
+  _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC015 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC284 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -1813,8 +1928,23 @@ Filling bytes inserted
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
-main                      USES _PWMPRCLK _PWMSCLA _PWMCLK _PWMPOL _PWMCAE 
-                                _PWMCTL _PWMPER45 _PWMDTY45 _PWMCNT45 _PWME 
+F_ADDKL                   USES F_XGKL F_NORMK 
+_FADD                     USES F_PULK F_PULL F_ADDKL F_PSHK 
+_FSFLOAT                  USES SL_PULK F_FRLONGK F_PSHK 
+_FSTRUNC                  USES F_PULK F_TOLONGK L_PSHK 
+_FUTRUNC                  USES _FSTRUNC 
+F_MULKL                   USES F_CLRK F_NORMK 
+_FMUL                     USES F_PULK F_PULL F_MULKL F_PSHK 
+F_MAXK                    USES F_CLRK 
+F_NORMK                   USES F_MAXK 
+L_NEGK                    USES _NEG_P 
+L_PSHK                    USES L_NEGK 
+SL_PULK                   USES L_NEGK 
+move_servos               USES _FCMP _FMUL _FADD _FUTRUNC _PWMDTY45 _PWMDTY67 
+initialise_servos         USES _DDRP _PWMPER45 _PWMPER67 _PWMDTY45 _PWMDTY67 
+initialise_PWM            USES _PWMPRCLK _PWMCTL _PWMCAE _PWMPOL _PWME 
+main                      USES initialise_PWM initialise_servos move_servos 
+                                ms_delay _ILSEXT _FSFLOAT 
 Init                      USES _startupData 
 
 *********************************************************************************************
@@ -1823,7 +1953,75 @@ DEPENDENCY TREE
  main and _Startup Group
  | 
  +- main                
- |    
+ |  | 
+ |  +- initialise_PWM      
+ |  |    
+ |  +- initialise_servos   
+ |  |    
+ |  +- move_servos         
+ |  |  | 
+ |  |  +- _FCMP               
+ |  |  |    
+ |  |  +- _FMUL               
+ |  |  |  | 
+ |  |  |  +- F_PULK              
+ |  |  |  |    
+ |  |  |  +- F_PULL              
+ |  |  |  |    
+ |  |  |  +- F_MULKL             
+ |  |  |  |  | 
+ |  |  |  |  +- F_CLRK              
+ |  |  |  |  |    
+ |  |  |  |  +- F_NORMK             
+ |  |  |  |     | 
+ |  |  |  |     +- F_MAXK              
+ |  |  |  |        | 
+ |  |  |  |        +- F_CLRK               (see above)
+ |  |  |  |           
+ |  |  |  +- F_PSHK              
+ |  |  |       
+ |  |  +- _FADD               
+ |  |  |  | 
+ |  |  |  +- F_PULK               (see above)
+ |  |  |  |  
+ |  |  |  +- F_PULL               (see above)
+ |  |  |  |  
+ |  |  |  +- F_ADDKL             
+ |  |  |  |  | 
+ |  |  |  |  +- F_XGKL              
+ |  |  |  |  |    
+ |  |  |  |  +- F_NORMK              (see above)
+ |  |  |  |     
+ |  |  |  +- F_PSHK               (see above)
+ |  |  |     
+ |  |  +- _FUTRUNC            
+ |  |     | 
+ |  |     +- _FSTRUNC            
+ |  |        | 
+ |  |        +- F_PULK               (see above)
+ |  |        |  
+ |  |        +- F_TOLONGK           
+ |  |        |    
+ |  |        +- L_PSHK              
+ |  |           | 
+ |  |           +- L_NEGK              
+ |  |              | 
+ |  |              +- _NEG_P              
+ |  |                   
+ |  +- ms_delay            
+ |  |    
+ |  +- _ILSEXT             
+ |  |    
+ |  +- _FSFLOAT            
+ |     | 
+ |     +- SL_PULK             
+ |     |  | 
+ |     |  +- L_NEGK               (see above)
+ |     |     
+ |     +- F_FRLONGK           
+ |     |    
+ |     +- F_PSHK               (see above)
+ |        
  +- _Startup            
     | 
     +- Init                
@@ -1836,6 +2034,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 106
+Number of blocks to be downloaded: 6
+Total size of all blocks to be downloaded: 1038
 

@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include "derivative.h"      /* derivative-specific definitions */
 
-extern unsigned overflow, edge1, diff, prescalar, TCR1Set, NewMeasure; 
-extern unsigned long pulse_width;
+unsigned overflow, edge1, edge2, diff; 
+unsigned long pulse_width;
 
 void init_TC1(void){
  
@@ -95,36 +95,47 @@ void convertTimeToDist(float* Output){
 }
 
 
- int getRange(void){
+ float getRange(void){
 
-    int distance;
+    float distance = 0.0;
+    
     // Set overflow to zero
     overflow = 0;
     // Set up timer to capture rising edge
-    TSCR1 = 0x90; // Enable timer counter, enable fast flag clear
-    TSCR2 = 0x00; // Disable overflow interrupt, prescalar stays at 0
-                  // Prescalar has to remain 0 due to its use in interrupts
+    TSCR1 = 0x80;       // Enable timer counter, no enable fast flag clear
+    TSCR2 = 0x00;       // Disable overflow interrupt, prescalar stays at 0
+                        // Prescalar has to remain 0 due to its use in interrupts
                   
-    TIOS &= ~0x02;// Switch IOS1 to input-capture and leave other timers alone
-    TCTL4 = 0x04; // Capture on RISING edge only of PT1
-    TFLG1 = 0x02; // Write a 1 to the interrupt flag register for PT1, clearing it
+    TIOS &= ~0x02;      // Switch IOS1 to input-capture and leave other timers alone
+    TCTL4 = 0x04;       // Capture on RISING edge only of PT1
+    TFLG1 = 0x02;       // Write a 1 to the interrupt flag register for PT1, clearing it
+    
+    PTH_PTH0   = 0;     // Trigger the Lidar
+    
     // Wait for rising edge 
+    
     while(!(TFLG1 & 0x02)); // Wait until the first rising edge triggers TFLG1 for PT1
-    TFLG2 = 0x80; // Clear the timer overflow flag
-    TSCR2|= 0x80; // Turn on the Timer overflow interrupt bit                                          // Can interrupt from overflow
-    edge1 = TC1; // Save the time the rising edge was recorded, and clear the C1F flag from TFLG1
-    TCTL4 = 0x08; // Capture on FALLING edge only of PT1
+    TFLG2 = 0x80;       // Clear the timer overflow flag
+    TSCR2|= 0x80;       // Turn on the Timer overflow interrupt bit        
+    edge1 = TC1;        // Save the time the rising edge was recorded, and clear the C1F flag from TFLG1
+    TFLG1 = 0x02;       // Write a 1 to the interrupt flag register for PT1, clearing it
+    TCTL4 = 0x08;       // Capture on FALLING edge only of PT1
+    
     // Time until falling edge
     while(!(TFLG1 & 0x02)); // Wait until the falling edge triggers the TFLG1 flag
-    diff = TC1 - edge1; // How many clock cycles pulse was high for disregarding overflow
-    if(edge1 < TC1){  // If the time that the edge fell was recorded 'before' it rose, then:
-      overflow -= 1; // Subtract 1 from overflow
+    edge2 = TC1;
+    TFLG1 = 0x02;       // Write a 1 to the interrupt flag register for PT1, clearing it
+    diff = edge2 - edge1; // How many clock cycles pulse was high disregarding overflow
+    if(edge2 < edge1){    // If the time that the edge fell was recorded 'before' it rose, then:
+      overflow -= 1;    // Subtract 1 from overflow
     }
     
-    pulseWidth = (long)overflow * 65536u + (long)diff;
+    pulse_width = (long)overflow * 65536u + (long)diff;
     
     convertTimerToTime(0x00, pulse_width, overflow, &distance);
     convertTimeToDist(&distance);
+    
+    PTH_PTH0   = 1;     // Untrigger the Lidar
     
     return distance;
  }
@@ -137,8 +148,8 @@ __interrupt void TOV_ISR(void) {
   overflow++;       
 }
 
-#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
-__interrupt void TC1_ISR(void) {  
+//#pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
+/*__interrupt void TC1_ISR(void) {  
   
   // At the start of this code, enable interrupts for timer overflow?
   
@@ -157,13 +168,13 @@ __interrupt void TC1_ISR(void) {
     //TSCR2 &=~0x80; // Disable TCNT overflow interrupt
    /* if(TC1 < edge1){      // If it is smaller than edge 1
       overflow -= 1;      // Remove an overflow count
-    } */
+    } *//*
     pulse_width = (long)overflow * 65536u + (long)diff;
     NewMeasure = 1;
     edge1 = 0;
-  }
+  }     
   
   // At copmletion of ISR, disable interrupts for timer overflow
   
-}
+} */
 

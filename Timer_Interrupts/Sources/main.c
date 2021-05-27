@@ -6,13 +6,16 @@
 // WARNING: Remember to alter required file depending if in simulation or hardware!
 
 // Global Variables
-unsigned overflow, edge1, diff, prescalar, TCR1Set, NewMeasure; 
-unsigned long pulse_width;
+//unsigned overflow, edge1, diff, prescalar, TCR1Set, NewMeasure; 
+//unsigned long pulse_width;
 
 
 
 void main(void) {
   volatile float distance = 0;
+  
+  DDRH_DDRH0 = 1;     // configure PH0 as output
+  PTH_PTH0   = 1;     // Prime the Lidar
   
 /*
   prescalar = 0x02;
@@ -29,24 +32,22 @@ void main(void) {
 
   
   // Initialise channel 1 for interrupts
-  init_TC1();
+  //init_TC1();
   
-  //TCNTOF(0x01);                   // Enables TCNT Overflow interrupt
-  
-  TSCR2 |= 0x80; // Enable TCNT overflow interrupt
-  TFLG2  = 0x80; // clear TOF flag
+  //TCNTOF(0x01);                   // Enables TCNT Overflow interrup
            
   EnableInterrupts;
   
+  distance = getRange();
   
   /* put your own code here */
 
   for(;;) {
-    if(NewMeasure == 1){
+    /*if(NewMeasure == 1){
       convertTimerToTime(0x02, pulse_width, overflow, &distance);
       convertTimeToDist(&distance);
       NewMeasure = 0;
-    } 
+    } */
     _FEED_COP(); /* feeds the dog */
   } /* loop forever */
   /* please make sure that you never leave main */

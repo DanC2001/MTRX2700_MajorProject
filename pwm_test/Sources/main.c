@@ -1,16 +1,8 @@
 #include "main.h"
 
-<<<<<<< HEAD
-#include "Servo.h"
-#include "Lidar.h"
-#include "Speaker.h"
-#include "LED.h"
-=======
 uint8_256buff_t tx;           // Creates tx buffer
 uint8_256buff_t rx;           // Creates rx buffer
 Byte SCI_Port_TXRX_Status[2]; // Creates status bytes for 2 ports
->>>>>>> 8e8a564bc34f398ff8850c5809f4c1b2f56d0a79
-
 
 /** The minimuim duty cycle allowed by the servos */
 //#define MIN_DUTY_CYCLE 2700
@@ -123,17 +115,14 @@ void main(void) {
   	float distance;
     float distance_matrix[5][13];  /* Set size equal to max count */
     
-<<<<<<< HEAD
     // Define central column so can be determined if object is to left or right
     unsigned int central_column = (max_count_pan + 1)/2;
     
     // Keep track of distance to closest object and its position
     float min_distance = 3.0;    /* Currently set within bounds so beeps on first scan */
     int min_column = 1;
-=======
     // Initialize the SCI port
-    if ((SCI_port = create_SCI_config()) == ESCIALLOC) for(;;) {_FEED_COP();}; 
->>>>>>> 8e8a564bc34f398ff8850c5809f4c1b2f56d0a79
+    if ((SCI_port = create_SCI_config()) == ESCIALLOC) for(;;) {_FEED_COP();};
     
     // Configure Lidar
     DDRH_DDRH0 = 1;     // configure PH0 as output
@@ -179,20 +168,14 @@ void main(void) {
         
       }
       
-<<<<<<< HEAD
-<<<<<<< HEAD
       // Display reccomended direction of travel to the user
       LED_display(min_column, central_column);
       
       
-=======
->>>>>>> 8e8a564bc34f398ff8850c5809f4c1b2f56d0a79
-=======
       // Make and send table to serial
       
       
       
->>>>>>> eebcafb449de43b885c7745fc2597c8ec901a0f0
       // Feed the dog after each scan to avoid timeout reset
       _FEED_COP();
       

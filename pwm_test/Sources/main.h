@@ -7,6 +7,7 @@
 #include "Lidar.h"
 #include "Speaker.h"
 #include "serial.h"
+#include "LED.h"
 
 
 Byte create_SCI_config(void);

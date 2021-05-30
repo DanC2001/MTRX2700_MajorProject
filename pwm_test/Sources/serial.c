@@ -25,10 +25,12 @@ void send_mesage(Byte SCI_port) {
   if (tx.cursor < tx.length) {
     SCI_Port_TXRX_Status[SCI_port] = SCI_TXPROCESSING;
     if (SCI_port == 0) {
-      SCI0DRL = tx.str[tx.cursor++];
+      SCI0DRL = tx.str[tx.cursor];
+      tx.cursor++;
       SCI0CR2_SCTIE = 1;
     } else {
-      SCI1DRL = tx.str[tx.cursor++];
+      SCI1DRL = tx.str[tx.cursor];
+      tx.cursor++;
       SCI1CR2_SCTIE = 1;  
     }
   }     
@@ -43,7 +45,8 @@ __interrupt void SCI0_ISR(void){
       }
     } else if (SCI0SR1_TDRE) {
       if (tx.cursor < tx.length) {
-        SCI0DRL = tx.str[tx.cursor++];
+        SCI0DRL = tx.str[tx.cursor];
+        tx.cursor++;
       } else {
         SCI0CR2_SCTIE = 0;
         //SCI1DRL = 0;
@@ -62,7 +65,8 @@ __interrupt void SCI1_ISR(void){
       }
     } else if (SCI1SR1_TDRE) {
       if (tx.cursor < tx.length) {
-        SCI1DRL = tx.str[tx.cursor++];
+        SCI1DRL = tx.str[tx.cursor];
+        tx.cursor++;
       } else {
         SCI1CR2_SCTIE = 0;
         //SCI1DRL = 0;

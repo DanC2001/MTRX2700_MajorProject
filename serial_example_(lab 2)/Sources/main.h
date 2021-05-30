@@ -3,6 +3,9 @@
 
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h"      /* derivative-specific definitions */
+#include "Servo.h"
+#include "Lidar.h"
+#include "Speaker.h"
 #include "serial.h"
 
 

@@ -1,7 +1,7 @@
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h"      /* derivative-specific definitions */
 
-#include "Functions.h"
+#include "serial.h"
 
 #pragma CODE_SEG __NEAR_SEG NON_BANKED /* Interrupt section for this module. Placement will be in NON_BANKED area. */
 __interrupt void UnimplementedISR(void)
@@ -56,19 +56,19 @@ const tIsrFunc _vect[] @0xFF80 = {     /* Interrupt table */
         UnimplementedISR,                 /* vector 0x18 (PORT J) */
         UnimplementedISR,                 /* vector 0x17 (ATD1) */
         UnimplementedISR,                 /* vector 0x16 (ATD0) */
-        UnimplementedISR,                 /* vector 0x15 (SCI1) */
-        UnimplementedISR,                 /* vector 0x14 (SCI0) */
+        SCI1_ISR,                 /* vector 0x15 (SCI1) */
+        SCI0_ISR,                 /* vector 0x14 (SCI0) */
         UnimplementedISR,                 /* vector 0x13 */
         UnimplementedISR,                 /* vector 0x12 */
         UnimplementedISR,                 /* vector 0x11 */
-        TOV_ISR,                           /* vector 0x10 (TOF) */
+        UnimplementedISR,                           /* vector 0x10 (TOF) */
         UnimplementedISR,                 /* vector 0x0F (TIE, C7I)  */
         UnimplementedISR,                 /* vector 0x0E (TIE, C6I)  */
         UnimplementedISR,                 /* vector 0x0C (TIE, C5I)  */
         UnimplementedISR,                 /* vector 0x0C (TIE, C4I)  */
         UnimplementedISR,                 /* vector 0x0B (TIE, C3I)  */
         UnimplementedISR,                 /* vector 0x0A (TIE, C2I)  */
-        TC1_ISR,                           /* vector 0x09 (TIE, C1I)  */
+        UnimplementedISR,                           /* vector 0x09 (TIE, C1I)  */
         UnimplementedISR,                 /* vector 0x08 (TIE, C0I) */
         UnimplementedISR,                 /* vector 0x07 (RTIE) */
         UnimplementedISR,                 /* vector 0x06 */

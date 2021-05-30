@@ -1,9 +1,8 @@
-#include <hidef.h>      /* common defines and macros */
-#include "derivative.h"      /* derivative-specific definitions */
+#include "main.h"
 
-#include "Servo.h"
-#include "Lidar.h"
-#include "Speaker.h"
+uint8_256buff_t tx;           // Creates tx buffer
+uint8_256buff_t rx;           // Creates rx buffer
+Byte SCI_Port_TXRX_Status[2]; // Creates status bytes for 2 ports
 
 
 /** The minimuim duty cycle allowed by the servos */
@@ -98,8 +97,8 @@ void ms_delay(unsigned int time_ms){
 void main(void) {
 
 
-
-    
+    // Define a byte for the SCI port 
+    Byte SCI_port;
 	
   	// Define tilt and pan scan bounds passed of design requirements, includes calibration adjustments
   	unsigned char min_tilt = 60;
@@ -116,6 +115,9 @@ void main(void) {
   	// Define matrix of distances
   	float distance;
     float distance_matrix[5][13];  /* Set size equal to max count */
+    
+    // Initialize the SCI port
+    if ((SCI_port = create_SCI_config()) == ESCIALLOC) for(;;) {_FEED_COP();}; 
     
     // Configure Lidar
     DDRH_DDRH0 = 1;     // configure PH0 as output
@@ -168,4 +170,35 @@ void main(void) {
     _FEED_COP(); /* feeds the dog */
   } /* loop forever */
   /* please make sure that you never leave main */
+}
+
+// Function to make the default settings for serial ports
+Byte create_SCI_config(void) {
+  SCI_config_t SCInCR_settings; // Make a new SCI port setrting structure
+   
+  // SCInCR1
+  SCInCR_settings.SCI_ControlReg1.Bits.PT = 0;
+  SCInCR_settings.SCI_ControlReg1.Bits.PE = 0;
+  SCInCR_settings.SCI_ControlReg1.Bits.ILT = 0;
+  SCInCR_settings.SCI_ControlReg1.Bits.WAKE = 1;   
+  SCInCR_settings.SCI_ControlReg1.Bits.M = 1;
+  SCInCR_settings.SCI_ControlReg1.Bits.RSRC = 0;
+  SCInCR_settings.SCI_ControlReg1.Bits.SCISWAI = 0;
+  SCInCR_settings.SCI_ControlReg1.Bits.LOOPS = 0;
+  
+  // SCInCR2
+  SCInCR_settings.SCI_ControlReg2.Bits.SBK = 0;
+  SCInCR_settings.SCI_ControlReg2.Bits.RWU = 0; 
+  SCInCR_settings.SCI_ControlReg2.Bits.RE = 1;
+  SCInCR_settings.SCI_ControlReg2.Bits.TE = 1;
+  SCInCR_settings.SCI_ControlReg2.Bits.ILIE = 0;
+  SCInCR_settings.SCI_ControlReg2.Bits.RIE = 1;
+  SCInCR_settings.SCI_ControlReg2.Bits.TCIE = 0;
+  SCInCR_settings.SCI_ControlReg2.Bits.SCTIE = 0; //transmit interrupt
+  
+  // Port Selection (Change for different port, 0 = SCI0, 1 = SCI1) 
+  SCInCR_settings.SCIn_port = 1;
+
+  // Call config fuction that will complete the configuration and return success value
+  return set_SCI_config(SCInCR_settings);   
 }

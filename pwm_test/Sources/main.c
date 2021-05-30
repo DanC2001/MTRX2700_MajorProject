@@ -4,6 +4,7 @@
 #include "Servo.h"
 #include "Lidar.h"
 #include "Speaker.h"
+#include "LED.h"
 
 
 void main(void) {
@@ -29,7 +30,7 @@ void main(void) {
     unsigned int central_column = (max_count_pan + 1)/2;
     
     // Keep track of distance to closest object and its position
-    float min_distance = 3.0;
+    float min_distance = 3.0;    /* Currently set within bounds so beeps on first scan */
     int min_column = 1;
     
     // Configure Lidar
@@ -42,6 +43,9 @@ void main(void) {
   	
   	// Initialise servos
   	initialise_servos();
+  	
+  	// Initialise the 7-seg LED's
+  	initialise_LED();
   		
   	// Enable interrupts for lidar
   	EnableInterrupts;
@@ -99,7 +103,7 @@ void main(void) {
       }
       
       // Display reccomended direction of travel to the user
-      //LED_display(min_column, central_column);
+      LED_display(min_column, central_column);
       
       
       // Feed the dog after each scan to avoid timeout reset

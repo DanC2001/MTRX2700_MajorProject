@@ -5,7 +5,7 @@
 void microsec_delay(unsigned int time_ms);
 
 // This function creates a beep on the speaker for the desired length
-void single_beep(unsigned int beep_length);
+void single_beep(float beep_frequency);
 
 
 #endif

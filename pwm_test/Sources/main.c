@@ -130,7 +130,7 @@ void main(void) {
   	// Initialise servos
   	initialise_servos();
   		
-  	// Enable interrupts for lidar
+  	// Enable interrupts for Lidar & Serial
   	EnableInterrupts;
 	
   	// Scan indefinitely
@@ -159,6 +159,10 @@ void main(void) {
         }
         
       }
+      
+      // Make and send table to serial
+      
+      
       
       // Feed the dog after each scan to avoid timeout reset
       _FEED_COP();

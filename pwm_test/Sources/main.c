@@ -6,104 +6,12 @@
 #include "Speaker.h"
 
 
-/** The minimuim duty cycle allowed by the servos */
-//#define MIN_DUTY_CYCLE 2700
-/** The maximium duty cycle allowed by the servos */
-//#define MAX_DUTY_CYCLE 6300
-/** The period of the PWM signal */
-//#define PERIOD 60000
-
-/*
-// Basic function to return a distance
-float scan_distanc(void){
-  
-  float distance = 1.5;
-  return distance;
-}
-
-// Function to move servos
-unsigned char move_servos(float tilt, float pan){
-	
-	unsigned int tilt_duty_cycle , pan_duty_cycle;
-	
-	if( tilt>180.0 || tilt<0.0 || pan>180.0 || pan<0.0 ) return 0;
-	tilt_duty_cycle = MIN_DUTY_CYCLE + (20 * tilt);
-	pan_duty_cycle = MIN_DUTY_CYCLE + (20 * pan);
-		
-//	assert(elevationDutyCycle <= MAX_DUTY_CYCLE && elevationDutyCycle >= MIN_DUTY_CYCLE && azimuthDutyCycle <= MAX_DUTY_CYCLE && azimuthDutyCycle >= MIN_DUTY_CYCLE);
-		
-	PWMDTY45 = tilt_duty_cycle;
-	PWMDTY67 = pan_duty_cycle;
-	return 1;
-}
-
-// Function to initialise servos
-void initialise_servos(void){
-
-  // Configure Port P data direction register for output
-	DDRP = 0xFF;
-	
-	// Set each concatenated period channel to the calculated period value
-	PWMPER45 = PERIOD;
-	PWMPER67 = PERIOD;
-
-  // Set each duty cycle to be minimum plus 90 degrees so that servos initially start from central location
-	PWMDTY45 = MIN_DUTY_CYCLE + (20 * 90);
-	PWMDTY67 = MIN_DUTY_CYCLE + (20 * 90);
-}
-
-// Function to initialise PWM settings
-void initialise_PWM(int clock_A , int clock_B){
-  
-  // Set the prescalers of clock A and B
-	PWMPRCLK = clock_A + (clock_B << 4);
-  
-  // Concatenate channels 4 and 5 to create a 16 bit channel
-  PWMCTL_CON45 = 0x01;
-  
-  // Concatenate channels 6 and 7 to create a 16 bit channel
-  PWMCTL_CON67 = 0x01;
-  
-  // Configure pulse to be left aligned
-	PWMCAE = 0x00;
-	
-	// Set polarity to 1
-	PWMPOL = 0xFF;
-	
-	// Enable PWM channels
-	PWME = 0xF0;
-}
-
-// Function causes time delay of 1 millisecond * input parameter
-void ms_delay(unsigned int time_ms){
-
-    // Define counter variables to count back from
-    // Volatile helps ensure this is not optimised out by compiler
-    volatile int i; 
-    volatile int j;
-    
-    // Define length of delay required for 1 ms
-    volatile int ms_delay = 4000;
-    
-    // Waste time for number of inputted milliseconds
-    for(i = 0; i < time_ms ; i++) {
-      
-      for(j = 0 ; j <ms_delay ; j++){
-      }
-    }
-}
-
-*/
-
 void main(void) {
 
-
-
-    
 	
   	// Define tilt and pan scan bounds passed of design requirements, includes calibration adjustments
-  	unsigned char min_tilt = 60;
-  	unsigned char max_tilt = 100;
+  	unsigned char min_tilt = 90;
+  	unsigned char max_tilt = 110;
   	unsigned char min_pan = 50;
   	unsigned char max_pan = 170;
   	
@@ -115,7 +23,14 @@ void main(void) {
   	
   	// Define matrix of distances
   	float distance;
-    float distance_matrix[5][13];  /* Set size equal to max count */
+    float distance_matrix[3][13];
+    
+    // Define central column so can be determined if object is to left or right
+    unsigned int central_column = (max_count_pan + 1)/2;
+    
+    // Keep track of distance to closest object and its position
+    float min_distance = 3.0;
+    int min_column = 1;
     
     // Configure Lidar
     DDRH_DDRH0 = 1;     // configure PH0 as output
@@ -152,11 +67,40 @@ void main(void) {
           // Save measuremnt into corresponding location in the distance matrix
           distance_matrix[i][j] = distance;
           
-          single_beep(1); 
+           
           
         }
         
+        single_beep(min_distance);
+        
       }
+      /* Scan complete */
+      
+      // Determine the minimum, non zero, value of the distance matrix, and its column index
+      min_distance = distance_matrix[1][1];
+      min_column = 1;
+      
+      // Loop through each element
+      for(i = 0; i < max_count_tilt; i++){
+      
+        for(j = 0; j < max_count_pan; j++){
+          
+          // Check if element is less than min
+          if(distance_matrix[i][j] < min_distance){
+            
+            // Update the new minimum distance
+            min_distance = distance_matrix[i][j];
+            
+            // Set the minimum column to correspond to location of min distance
+            min_column = j;
+          }
+          
+        }
+      }
+      
+      // Display reccomended direction of travel to the user
+      //LED_display(min_column, central_column);
+      
       
       // Feed the dog after each scan to avoid timeout reset
       _FEED_COP();

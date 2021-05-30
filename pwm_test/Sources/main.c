@@ -149,7 +149,7 @@ void main(void) {
   	// Initialise the 7-seg LED's
   	initialise_LED();
   		
-  	// Enable interrupts for lidar
+  	// Enable interrupts for Lidar & Serial
   	EnableInterrupts;
 	
   	// Scan indefinitely
@@ -180,12 +180,19 @@ void main(void) {
       }
       
 <<<<<<< HEAD
+<<<<<<< HEAD
       // Display reccomended direction of travel to the user
       LED_display(min_column, central_column);
       
       
 =======
 >>>>>>> 8e8a564bc34f398ff8850c5809f4c1b2f56d0a79
+=======
+      // Make and send table to serial
+      
+      
+      
+>>>>>>> eebcafb449de43b885c7745fc2597c8ec901a0f0
       // Feed the dog after each scan to avoid timeout reset
       _FEED_COP();
       

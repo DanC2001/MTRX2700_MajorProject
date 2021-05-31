@@ -38,9 +38,6 @@ void send_mesage(Byte SCI_port) {
   }     
 }
 
-
-
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Interupt Functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 // SCI0 Interrupt Function

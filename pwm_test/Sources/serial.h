@@ -11,9 +11,9 @@
 
 
 typedef struct uint8_256buff_t {
-  char str[256];
-  Byte length;  
-  Byte cursor;  
+  char str[512];
+  unsigned int length;  
+  unsigned int cursor;  
 } uint8_256buff_t;
 
 typedef struct {

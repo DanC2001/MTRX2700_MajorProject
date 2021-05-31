@@ -30,10 +30,7 @@ extern Byte SCI_Port_TXRX_Status[2];
 
 Byte set_SCI_config(SCI_config_t);
 
-static char * matrix2D_to_string(const float *matrix, size_t rows, size_t cols);
 void send_mesage(Byte SCI_port);
-
-//void send_mesage(struct char256buff msg); 
 
 __interrupt void SCI0_ISR(void);
 

@@ -26,11 +26,11 @@ Byte set_SCI_config(SCI_config_t port_parameters) {
 void send_mesage(Byte SCI_port) {
   if (tx.cursor < tx.length) {  // if still message left
     SCI_Port_TXRX_Status[SCI_port] = SCI_TXPROCESSING;
-    if (SCI_port == 0) { // If SCI1
+    if (SCI_port == 0) { // If SCI0
       SCI0DRL = tx.str[tx.cursor]; // load caharacter
       tx.cursor++;                 // increment cursor
       SCI0CR2_SCTIE = 1;           // push it through
-    } else {             // If SCI0
+    } else {             // If SCI1
       SCI1DRL = tx.str[tx.cursor]; // load caharacter
       tx.cursor++;                 // increment cursor
       SCI1CR2_SCTIE = 1;           // push it through

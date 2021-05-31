@@ -6,7 +6,7 @@ Presentation: 3rd June 2021
 Link to presentation slides for editing:
 https://docs.google.com/presentation/d/1Vonpd3pOWvPvMa8eycqZICycjNNrLNRT4l6XoxO-a8A/edit?usp=sharing
 
-Andy Scott, 
+Andy Scott, 500443844
 
       Primary responsibilities: LIDAR
       Other responsibilities: PWM, Timer

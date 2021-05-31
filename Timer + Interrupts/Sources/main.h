@@ -2,12 +2,12 @@
 #define MAIN_HEADER
 
 #include <hidef.h>      /* common defines and macros */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "derivative.h"      /* derivative-specific definitions */
-#include "Servo.h"
-#include "Lidar.h"
-#include "Speaker.h"
 #include "serial.h"
-#include "LED.h"
 
 
 Byte create_SCI_config(void);

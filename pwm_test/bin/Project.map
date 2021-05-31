@@ -61,7 +61,7 @@ Section Name                    Size  Type     From       To       Segment
 .rodata1                           9     R     0xC153     0xC15B   ROM_C000
 NON_BANKED                      2297     R     0xC15C     0xCA54   ROM_C000
 .copy                              2     R     0xCA55     0xCA56   ROM_C000
-.text                           5000     R   0x308000   0x309387   PAGE_30
+.text                           5006     R   0x308000   0x30938D   PAGE_30
 .stack                          1280   R/W     0x1000     0x14FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -411,7 +411,7 @@ HEAP_SEGMENT                    2000   R/W     0x1917     0x20E6   RAM
 .vectSeg342_vect                   2     R     0xFFFE     0xFFFF   .vectSeg342
 
 Summary of section sizes per section type:
-READ_ONLY (R):        1E5F (dec:     7775)
+READ_ONLY (R):        1E65 (dec:     7781)
 READ_WRITE (R/W):     10E7 (dec:     4327)
 NO_INIT (N/I):         190 (dec:      400)
 
@@ -772,8 +772,8 @@ MODULE:                 -- mc9s12dg256.c.o --
 MODULE:                 -- main.c.o --
 - PROCEDURES:
      matrix2D_to_string                      308000     196     406       7   .text       
-     main                                    308196     147     327       6   .text       
-     create_SCI_config                       3082DD      16      22       2   .text       
+     main                                    308196     14D     333       6   .text       
+     create_SCI_config                       3082E3      16      22       4   .text       
 - VARIABLES:
      STRING...2f.1                             C153       5       5       1   .rodata1    
      STRING...2                                C158       2       2       1   .rodata1    
@@ -783,7 +783,7 @@ MODULE:                 -- main.c.o --
      SCI_Port_TXRX_Status                      1913       2       2       5   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    3082F3      29      41       2   .text       
+     Init                                    3082F9      29      41       2   .text       
      _Startup                                  C000      15      21       0   .init       
 - VARIABLES:
      _startupData                              C015       6       6       3   .startData  
@@ -791,16 +791,16 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          1500       0       0       1               
 MODULE:                 -- HEAP.C.o (ansibf.lib) --
 - PROCEDURES:
-     _heapcrash_                             30831C       C      12       6   .text       
+     _heapcrash_                             308322       C      12       6   .text       
 - VARIABLES:
      _heap_                                    1917     7D0    2000       2   HEAP_SEGMENT
 MODULE:                 -- PRINTF.C.o (ansibf.lib) --
 - PROCEDURES:
-     Ten                                     308328      F6     246      14   .text       
-     vprintf                                 30841E     AB4    2740     155   .text       
-     _out                                    308ED2       C      12       2   .text       
-     deposit_char                            308EDE       F      15       3   .text       
-     sprintf                                 308EED      2F      47       4   .text       
+     Ten                                     30832E      F6     246      14   .text       
+     vprintf                                 308424     AB4    2740     155   .text       
+     _out                                    308ED8       C      12       2   .text       
+     deposit_char                            308EE4       F      15       3   .text       
+     sprintf                                 308EF3      2F      47       4   .text       
 - VARIABLES:
      pow10                                     C01F      28      40       6   .rodata     
      pow16                                     C047      20      32       4   .rodata     
@@ -810,15 +810,15 @@ MODULE:                 -- PRINTF.C.o (ansibf.lib) --
      pbuf                                      1500       7       7      16   .bss        
 MODULE:                 -- STRING.C.o (ansibf.lib) --
 - PROCEDURES:
-     memset                                  308F1C      18      24       4   .text       
-     strlen                                  308F34      14      20       8   .text       
-     strcpy                                  308F48       D      13       6   .text       
+     memset                                  308F22      18      24       4   .text       
+     strlen                                  308F3A      14      20       8   .text       
+     strcpy                                  308F4E       D      13       6   .text       
 - VARIABLES:
 MODULE:                 -- ALLOC.C.o (ansibf.lib) --
 - PROCEDURES:
-     malloc                                  308F55      A7     167       4   .text       
-     free                                    308FFC      C6     198       3   .text       
-     calloc                                  3090C2      23      35       2   .text       
+     malloc                                  308F5B      A7     167       4   .text       
+     free                                    309002      C6     198       3   .text       
+     calloc                                  3090C8      23      35       2   .text       
 - VARIABLES:
      heap_end                                  1507       2       2       3   .bss        
      free_ptr                                  1509       2       2       8   .bss        
@@ -931,10 +931,10 @@ MODULE:                 -- Lidar.c.o --
      overflow                                  1915       2       2       2   .common     
 MODULE:                 -- Servo.c.o --
 - PROCEDURES:
-     move_servos                             3090E5      7F     127       2   .text       
-     initialise_servos                       309164      14      20       2   .text       
-     initialise_PWM                          309178      1C      28       2   .text       
-     ms_delay                                309194      2C      44      14   .text       
+     move_servos                             3090EB      7F     127       2   .text       
+     initialise_servos                       30916A      14      20       2   .text       
+     initialise_PWM                          30917E      1C      28       2   .text       
+     ms_delay                                30919A      2C      44      12   .text       
 - VARIABLES:
 MODULE:                 -- isr_vectors.c.o --
 - PROCEDURES:
@@ -943,18 +943,18 @@ MODULE:                 -- isr_vectors.c.o --
      _vect                                     FF80      7E     126       0   .abs_section_ff80
 MODULE:                 -- Speaker.c.o --
 - PROCEDURES:
-     microsec_delay                          3091C0      2C      44       4   .text       
-     single_beep                             3091EC      61      97       2   .text       
+     microsec_delay                          3091C6      2C      44       4   .text       
+     single_beep                             3091F2      61      97       2   .text       
 - VARIABLES:
 MODULE:                 -- LED.c.o --
 - PROCEDURES:
-     initialise_LED                          30924D      4B      75       2   .text       
-     LED_display                             309298      82     130       2   .text       
+     initialise_LED                          309253      4B      75       2   .text       
+     LED_display                             30929E      82     130       2   .text       
 - VARIABLES:
 MODULE:                 -- serial.c.o --
 - PROCEDURES:
-     set_SCI_config                          30931A      42      66       2   .text       
-     send_mesage                             30935C      2C      44       2   .text       
+     set_SCI_config                          309320      42      66       2   .text       
+     send_mesage                             309362      2C      44       2   .text       
      SCI0_ISR                                  C9CF      43      67       1   NON_BANKED  
      SCI1_ISR                                  CA12      43      67       1   NON_BANKED  
 - VARIABLES:
@@ -964,7 +964,7 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12dg256.c.o                            400      0      0
-  main.c.o                                  1034    755      9
+  main.c.o                                  1034    761      9
   Start12.c.o                                  0     62      0
   HEAP.C.o (ansibf.lib)                     2000     12      0
   PRINTF.C.o (ansibf.lib)                      7   3060    308
@@ -2134,31 +2134,31 @@ OBJECT LIST SORTED BY ADDRESS
      SCI1_ISR                                  CA12      43      67       1   NON_BANKED  
      _vect                                     FF80      7E     126       0   .abs_section_ff80
      matrix2D_to_string                      308000     196     406       7   .text       
-     main                                    308196     147     327       6   .text       
-     create_SCI_config                       3082DD      16      22       2   .text       
-     Init                                    3082F3      29      41       2   .text       
-     _heapcrash_                             30831C       C      12       6   .text       
-     Ten                                     308328      F6     246      14   .text       
-     vprintf                                 30841E     AB4    2740     155   .text       
-     _out                                    308ED2       C      12       2   .text       
-     deposit_char                            308EDE       F      15       3   .text       
-     sprintf                                 308EED      2F      47       4   .text       
-     memset                                  308F1C      18      24       4   .text       
-     strlen                                  308F34      14      20       8   .text       
-     strcpy                                  308F48       D      13       6   .text       
-     malloc                                  308F55      A7     167       4   .text       
-     free                                    308FFC      C6     198       3   .text       
-     calloc                                  3090C2      23      35       2   .text       
-     move_servos                             3090E5      7F     127       2   .text       
-     initialise_servos                       309164      14      20       2   .text       
-     initialise_PWM                          309178      1C      28       2   .text       
-     ms_delay                                309194      2C      44      14   .text       
-     microsec_delay                          3091C0      2C      44       4   .text       
-     single_beep                             3091EC      61      97       2   .text       
-     initialise_LED                          30924D      4B      75       2   .text       
-     LED_display                             309298      82     130       2   .text       
-     set_SCI_config                          30931A      42      66       2   .text       
-     send_mesage                             30935C      2C      44       2   .text       
+     main                                    308196     14D     333       6   .text       
+     create_SCI_config                       3082E3      16      22       4   .text       
+     Init                                    3082F9      29      41       2   .text       
+     _heapcrash_                             308322       C      12       6   .text       
+     Ten                                     30832E      F6     246      14   .text       
+     vprintf                                 308424     AB4    2740     155   .text       
+     _out                                    308ED8       C      12       2   .text       
+     deposit_char                            308EE4       F      15       3   .text       
+     sprintf                                 308EF3      2F      47       4   .text       
+     memset                                  308F22      18      24       4   .text       
+     strlen                                  308F3A      14      20       8   .text       
+     strcpy                                  308F4E       D      13       6   .text       
+     malloc                                  308F5B      A7     167       4   .text       
+     free                                    309002      C6     198       3   .text       
+     calloc                                  3090C8      23      35       2   .text       
+     move_servos                             3090EB      7F     127       2   .text       
+     initialise_servos                       30916A      14      20       2   .text       
+     initialise_PWM                          30917E      1C      28       2   .text       
+     ms_delay                                30919A      2C      44      12   .text       
+     microsec_delay                          3091C6      2C      44       4   .text       
+     single_beep                             3091F2      61      97       2   .text       
+     initialise_LED                          309253      4B      75       2   .text       
+     LED_display                             30929E      82     130       2   .text       
+     set_SCI_config                          309320      42      66       2   .text       
+     send_mesage                             309362      2C      44       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -2260,8 +2260,8 @@ _vect                     USES UnimplementedISR SCI1_ISR SCI0_ISR TOV_ISR
 matrix2D_to_string        USES STRING...2f.1 STRING...2 STRING...3 calloc 
                                 matrix2D_to_string _DLONG sprintf strlen malloc strcpy memset 
                                 free 
-main                      USES _DDRH _PTH initialise_PWM initialise_servos 
-                                initialise_LED create_SCI_config tx main move_servos ms_delay 
+main                      USES create_SCI_config _DDRH _PTH initialise_PWM 
+                                initialise_servos initialise_LED tx main move_servos ms_delay 
                                 single_beep matrix2D_to_string strcpy strlen LED_display 
                                 _ILSEXT _FSFLOAT send_mesage 
 create_SCI_config         USES set_SCI_config 
@@ -2295,6 +2295,10 @@ DEPENDENCY TREE
  | 
  +- main                
  |  | 
+ |  +- create_SCI_config   
+ |  |  | 
+ |  |  +- set_SCI_config      
+ |  |       
  |  +- initialise_PWM      
  |  |    
  |  +- initialise_servos   
@@ -2302,10 +2306,6 @@ DEPENDENCY TREE
  |  +- initialise_LED      
  |  |  | 
  |  |  +- ms_delay            
- |  |       
- |  +- create_SCI_config   
- |  |  | 
- |  |  +- set_SCI_config      
  |  |       
  |  +- move_servos         
  |  |  | 
@@ -2558,5 +2558,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 8
-Total size of all blocks to be downloaded: 7775
+Total size of all blocks to be downloaded: 7781
 

@@ -2,9 +2,15 @@
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(*a))
 
+#include "Servo.h"
+#include "Lidar.h"
+#include "Speaker.h"
+#include "LED.h"
+
 uint8_256buff_t tx;           // Creates tx buffer
 uint8_256buff_t rx;           // Creates rx buffer
 Byte SCI_Port_TXRX_Status[2]; // Creates status bytes for 2 ports
+
 
 // Function to make table as a string
 static char * matrix2D_to_string(const float *matrix, size_t rows, size_t cols){
@@ -108,7 +114,9 @@ void main(void) {
     // Keep track of distance to closest object and its position
     float min_distance = 3.0;    /* Currently set within bounds so beeps on first scan */
     int min_column = 1;
-    
+
+    // Initialize the SCI port
+    if ((SCI_port = create_SCI_config()) == ESCIALLOC) for(;;) {_FEED_COP();};
     
     // Configure Lidar
     DDRH_DDRH0 = 1;     // configure PH0 as output
@@ -174,6 +182,10 @@ void main(void) {
         }
         
       }
+      
+      // Display reccomended direction of travel to the user
+      LED_display(min_column, central_column);
+
       // Make and send table to serial
       
       s = matrix2D_to_string((const float *)distance_matrix, ARRAY_SIZE(distance_matrix), ARRAY_SIZE(distance_matrix[0]));
@@ -184,7 +196,7 @@ void main(void) {
       
       // Display reccomended direction of travel to the user
       LED_display(min_column, central_column);      
-      
+
       // Feed the dog after each scan to avoid timeout reset
       _FEED_COP();
       
@@ -314,5 +326,3 @@ void ms_delay(unsigned int time_ms){
       }
     }
 }
-
-*/

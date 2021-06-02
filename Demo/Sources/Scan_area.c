@@ -159,7 +159,7 @@ void scan_area(void){
         for(j = 0; j < max_count_pan; j++){
           
           // Check if element is less than min but not zero
-          // Zero readings are ignored as indicates lidar error
+          // Readings less than 4cm are ignored as indicates lidar error
           if(distance_matrix[i][j] < min_distance && distance_matrix[i][j] > 0.04){
             
             // Update the new minimum distance

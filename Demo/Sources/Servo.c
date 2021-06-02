@@ -11,6 +11,9 @@
 // The period of the PWM signal
 #define PERIOD 60000
 
+// Include header file so that assert function is defined
+#include <assert.h>
+
 
 // This function takes in a tilt and pan angle and moves the servo to the desired position
 // A one is returned on success and a 0 is returned on failure if angle is out of range
@@ -29,7 +32,8 @@ void move_servos(float tilt, float pan){
 	tilt_duty_cycle = MIN_DUTY_CYCLE + (20 * tilt);
 	pan_duty_cycle = MIN_DUTY_CYCLE + (20 * pan);
 		
-//	assert(elevationDutyCycle <= MAX_DUTY_CYCLE && elevationDutyCycle >= MIN_DUTY_CYCLE && azimuthDutyCycle <= MAX_DUTY_CYCLE && azimuthDutyCycle >= MIN_DUTY_CYCLE);
+  assert(tilt_duty_cycle <= MAX_DUTY_CYCLE && tilt_duty_cycle >= MIN_DUTY_CYCLE);
+  assert(pan_duty_cycle <= MAX_DUTY_CYCLE && pan_duty_cycle >= MIN_DUTY_CYCLE);
 		
 	PWMDTY45 = tilt_duty_cycle;
 	PWMDTY67 = pan_duty_cycle;

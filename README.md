@@ -22,13 +22,15 @@ Isabella Shaw, 500554852
       Other responsibilities: Servos, documentation
       
 # User instructions      
-* Set input values by changing lines xxx in main.c
+* Can optionally alter the server range and resolution by altering values defined in "servo.h", found in Demo folder
 * Run the program to ensure input values are within range for each module
 * When stopping and restarting the program, press the reset button on the HCS12 board to ensure full functionality
 * main.c consists only of functions to initialise and set up each module and to begin scanning
 
 # Modules
 ## PWM & Servomotors
+      Location: Demo > servos.h
+
       High Level Code Information:
             * The functions for the PWM and servos module can be found in Servo.c and main.c
             * This module takes a duty cycle and period input value and generates a square wave PWM signal based on these values
@@ -49,6 +51,7 @@ Isabella Shaw, 500554852
       Limitations
             * Signal can only be generated within E-Clock limitations, as period and duty cycle are based on E-clock frequency (24MHz)
             * Full range of motion of the servos is limited from 0 to 180 degrees on both pan and tilt
+	    * There is some time required more the servos to mechanically move into the new position
       Testing
             * Attach an oscilloscope to the relevant pins on the microcontroller to see the PWM signal and check it has the correct duty cycle and period
             * Set up an LED to flash with the PWM signal (LED is on when PWM is HIGH)
@@ -58,6 +61,8 @@ Isabella Shaw, 500554852
             * Tested different inputted pan and tilt values to ensure that servos were never directed to move past their mechanical stops
 
 ## Timer
+      Location Demo > isr_vectors.c and also Demo > lidar.h
+
       High Level Code Information:
             * The functions for the timer module can be found in Lidar.c
             * This module utilises the timer channels on the HCS12 board to work in conjunction with the LIDAR sensor
@@ -78,6 +83,8 @@ Isabella Shaw, 500554852
             * Test with PH0 (LIDAR) to test input capture of signal
             
 ## LIDAR
+      Location: Demo > lidar.h
+
       High Level Code Information:
             * The functions for the timer module can be found in Lidar.c, main.c and scan_area.c
             * The LIDAR is a sensor that is used to detect obstacles in the surrounding environment
@@ -99,6 +106,8 @@ Isabella Shaw, 500554852
 
             
 ## Serial
+      Location: Demo > serial.h
+
       High Level Code Information:
             * The functions for the serial module can be found in serial.c, main.c and scan_area.c
             * All the functions for this module that are located in scan_area.c are involved in the tabularisation process
@@ -133,6 +142,8 @@ Isabella Shaw, 500554852
             * Test with functions adding to/from the buffer.
             
 ## Speaker
+      Location: Demo > speaker.h
+
       High Level Code Information:
             * The functions for the timer module can be found in speaker.c
             * Tis module takes distance information from the LIDAR module and plays a beep at a pitch that is inversely proportional to the distance value
@@ -153,6 +164,8 @@ Isabella Shaw, 500554852
 
             
 ## LEDs
+      Location: Demo > LED.h
+
       High Level Code Information:
             * The functions for the timer module can be found in LED.c and main.c
             * This module takes the index within the distance matrix of the minimum distance value from the LIDAR as an input

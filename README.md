@@ -90,7 +90,8 @@ Isabella Shaw, 500554852
             * If a new obstacle appears in the middle of a scan, it will not be picked up until the next scan
       Testing
             * Started by taking single measurements to a large object and then measured physical difference to ensure they matched
-            * Then tested it by taking measurements across a grid using servos and outputted the matrix to serial to ensure that results aligned with the                         environment being mapped
+            * Then tested it by taking measurements across a grid using servos and outputted the matrix to serial to ensure that results aligned with the         
+              environment being mapped
 
             
 ## Serial

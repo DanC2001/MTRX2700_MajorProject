@@ -4,7 +4,6 @@ Major Project for MTRX2700 at USYD in Semester 1 2021
 Presentation: 3rd June 2021
 
 Presentation slides for further information on this project:
-
 https://docs.google.com/presentation/d/1Vonpd3pOWvPvMa8eycqZICycjNNrLNRT4l6XoxO-a8A/edit?usp=sharing
 
 Andy Scott, 500443844

@@ -1,6 +1,8 @@
 #include <hidef.h>      /* common defines and macros */
 #include "derivative.h"      /* derivative-specific definitions */
 
+#include <assert.h> /* Assert header for error catching */
+
 // This function casues a time delay of the inputted number of milliseconds
 void ms_delay(unsigned int time_ms);
 
@@ -8,6 +10,11 @@ void ms_delay(unsigned int time_ms);
 // 1 is displayed if module has initialised successful, otherwise a zero is displayed
 void initialise_LED(unsigned char PWM_status, unsigned char servo_status, unsigned char lidar_status){
 
+  // Ensure that input is valid, should either be 1 for functional or 0 for not functional
+  //assert(PWM_status == 1 || PWM_status == 0);
+ // assert(servo_status == 1 || servo_status == 0);
+  //assert(lidar_status == 1 || lidar_status == 0);
+  
   // Define counter variable
   unsigned int i;
   
@@ -85,13 +92,16 @@ void initialise_LED(unsigned char PWM_status, unsigned char servo_status, unsign
 
 // This function displays either left or right to the 7-segs
 // Decision is based of where the min distance is relative to central point
-void LED_display(unsigned int min_column, unsigned int central_column){
+void LED_display(unsigned char min_column, unsigned char central_column){
 
   // Define counter variable
   unsigned int i;
   
   // Define number of loops i.e. time to display start up for
   unsigned int no_loops = 50;
+  
+  // Check that input is valid
+  assert(min_column >= 0 && central_column >= 0);
 
   // Check if min column is greater than or equal to central column
   // If object in middle then left reccomendation has preference as left is social norm in AUS

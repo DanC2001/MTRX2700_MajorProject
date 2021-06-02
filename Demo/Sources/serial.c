@@ -1,5 +1,7 @@
 #include "serial.h"
 
+#include <assert.h> /* Assert header for error catching */
+
 // Function to make the default settings for serial ports
 Byte create_SCI_config(byte SCI_port) {
   SCI_config_t SCInCR_settings; // Make a new SCI port setrting structure

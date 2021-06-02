@@ -7,6 +7,8 @@
 #include "Scan_area.h"
 #include "Serial.h"
 
+#include <assert.h> /* Assert header for error catching */
+
 uint8_512buff_t tx;           // Creates tx buffer
 uint8_512buff_t rx;           // Creates rx buffer
 Byte SCI_Port_TXRX_Status[2]; // Creates status bytes for 2 ports

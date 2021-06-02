@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include "derivative.h"      /* derivative-specific definitions */
 
+#include <assert.h> /* Assert header for error catching */
+
 // Variables local to this file to keep track of rising and falling edge and time the distance between them
 unsigned overflow, edge1, edge2, diff; 
 unsigned long pulse_width;

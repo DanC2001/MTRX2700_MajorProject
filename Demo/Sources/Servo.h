@@ -10,7 +10,7 @@
 
 // This function configures PWM channel 5 and 7, the two input arguments are the prescaler
 // values for clock A and B, function sets waves as polarity 1 and left aligned
-unsigned char initialise_PWM(int clock_A , int clock_B);
+unsigned char initialise_PWM(unsigned char clock_A , unsigned char clock_B);
 
 // This function initialises the servos to begin in the central position
 unsigned char initialise_servos(void);

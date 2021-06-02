@@ -24,7 +24,7 @@ static char * matrix2D_to_string(const float *matrix, size_t rows, size_t cols){
   char *buffer = NULL, *p = NULL;
   char buf[256];
   
-  assert(rows<=0 || cols<=0);
+  assert(rows>0 && cols>0);
   
   // Calculates maximum width for each column
   col_width = (int *)calloc(cols, sizeof(*col_width));

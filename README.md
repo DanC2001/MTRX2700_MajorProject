@@ -3,23 +3,23 @@ Major Project for MTRX2700 at USYD in Semester 1 2021
 
 Presentation: 3rd June 2021
 
-Link to presentation slides for editing:
+Presentation slides:
 https://docs.google.com/presentation/d/1Vonpd3pOWvPvMa8eycqZICycjNNrLNRT4l6XoxO-a8A/edit?usp=sharing
 
 Andy Scott, 500443844
 
-      Primary responsibilities: LIDAR
-      Other responsibilities: PWM, Timer
+      Primary responsibilities: Servos, LEDs, Speaker
+      Other responsibilities: LIDAR
       
 Daniel Cook, 490394414
 
       Primary responsibilities: Timer & interrupts
-      Other responsibilities:
+      Other responsibilities: Serial
       
 Isabella Shaw, 500554852
 
-      Primary responsibilities: PWM & Servos, Presentation
-      Other responsibilities: Documentation
+      Primary responsibilities: PWM, Presentation
+      Other responsibilities: Servos, Documentation
 
 # Project Summary
 This project provides an assistive technology for people operating from a wheelchair. The project incorporates a panning lidar
@@ -30,7 +30,7 @@ is working as required.
 
       
 # User instructions      
-* Set input values by changing lines xxx in main.c
+* Set input values for different modules by changing the lines in the relevant files, as stated below
 * Run the program to ensure input values are within range for each module
 * When stopping and restarting the program, press the reset button on the HCS12 board to ensure full functionality
 * main.c consists only of functions to initialise and set up each module and to begin scanning

@@ -7,9 +7,84 @@
 #include "LED.h"
 #include "Scan_area.h"
 
+// Function to make table as a string
+static char * matrix2D_to_string(const float *matrix, size_t rows, size_t cols){
+  //~~~ Strings in the stack ~~~//
+  const char * format         = "%.2f";
+  const char * col_seperator  = " ";
+  const char * row_seperator  = "\n";
+  
+  int width = 0;
+  int *col_width = NULL;
+  size_t r = 0, c = 0, size = 0;
+  char *buffer = NULL, *p = NULL;
+  char buf[256];
+  
+  // Calculates maximum width for each column
+  col_width = (int *)calloc(cols, sizeof(*col_width));
+  
+  for(r = 0; r < rows; ++r){
+    for(c = 0; c < cols; ++c){
+      width = sprintf(buf, format, matrix[r * cols + c]);
+      if(width > col_width[c]){
+        col_width[c] = width;
+      }
+    }
+  }
+  
+  // Calculate the total buffer size taking...
+  // ... Each value into account
+  for(c = 0; c < cols; ++c){
+    size += col_width[c] * rows;
+  }
+  
+  // ... Column seperators into account
+  size += (cols - 1) * strlen(col_seperator);
+  
+  // ... Row seperators into account
+  size += (rows - 1) * strlen(row_seperator);
+  
+  // ... Null terminator into account
+  size++;
+  
+  // Make the string
+  buffer = (char*)malloc(size);
+  p = buffer;
+  for(r = 0; r < rows; ++r){
+    if(r){
+      strcpy(p,row_seperator);
+      p += strlen(row_seperator); 
+    }
+    for(c = 0; c < cols; ++c){
+      if(c){
+        strcpy(p,col_seperator);
+        p += strlen(col_seperator); 
+      }
+      width = sprintf(p,format,matrix[r * cols +c]);
+      p += width;
+      if(width < col_width[c]){
+        width = col_width[c] - width;
+        memset(p,' ', width);
+        p += width; 
+      }
+    }
+  }
+  *p = '\0';
+  
+  //cleanup
+  free(col_width);
+  
+  return buffer;
+}
+
+
 // This function continuosly performs an entire scan of the area and outputs information to the user
 void scan_area(void){ 
   	
+  	// Define a string for table
+	  char *s = NULL;
+  	
+  	byte SCI_port = 1;
   	// Define counter variables to discretise area into a grid
   	unsigned char i,j;
   	unsigned char max_count_tilt = (MAX_TILT-MIN_TILT)/INCREMENT + 1;
@@ -28,7 +103,18 @@ void scan_area(void){
 	  
 	  // Scan indefinitely
 	  while(1){
-	    
+	    tx.str[0] = '1';
+      tx.str[1] = '2';
+      tx.str[2] = '3';
+      tx.str[3] = '4';
+      tx.str[4] = '5';
+      tx.str[5] = '\r';
+      tx.str[6] = '\n';
+      tx.str[7] = '\0';
+      tx.length = 8;
+      tx.cursor = 0;
+      
+      send_mesage(SCI_port);  
   
       // Loop through tilt angles
       for(i = 0; i < max_count_tilt; i++){
@@ -43,7 +129,8 @@ void scan_area(void){
           ms_delay(10);          
                     
           // Take measurement
-          distance = getRange();
+          //distance = getRange();
+          distance = 0.01;
           
           // Save measuremnt into corresponding location in the distance matrix
           distance_matrix[i][j] = distance;
@@ -73,7 +160,7 @@ void scan_area(void){
           
           // Check if element is less than min but not zero
           // Zero readings are ignored as indicates lidar error
-          if(distance_matrix[i][j] < min_distance && distance_matrix[i][j] > 0){
+          if(distance_matrix[i][j] < min_distance && distance_matrix[i][j] > 0.04){
             
             // Update the new minimum distance
             min_distance = distance_matrix[i][j];
@@ -85,8 +172,16 @@ void scan_area(void){
         }
       }
       
+      s = matrix2D_to_string((const float *)distance_matrix, ARRAY_SIZE(distance_matrix), ARRAY_SIZE(distance_matrix[0]));
+      strcpy(tx.str, s);
+      tx.length = strlen(s);
+      tx.cursor = 0;
+      send_mesage(SCI_port);
+      
       // Display reccomended direction of travel to the user
       LED_display(min_column, central_column);
+      
+      
       
       // Feed the dog to avoid timeout reset
       _FEED_COP();

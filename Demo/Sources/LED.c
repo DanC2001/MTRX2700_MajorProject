@@ -9,17 +9,17 @@ void ms_delay(unsigned int time_ms);
 // This funciton initialises the LED's and displays the status of each module
 // 1 is displayed if module has initialised successful, otherwise a zero is displayed
 void initialise_LED(unsigned char PWM_status, unsigned char servo_status, unsigned char lidar_status){
-
-  // Ensure that input is valid, should either be 1 for functional or 0 for not functional
-  //assert(PWM_status == 1 || PWM_status == 0);
- // assert(servo_status == 1 || servo_status == 0);
-  //assert(lidar_status == 1 || lidar_status == 0);
   
   // Define counter variable
   unsigned int i;
   
   // Define number of loops i.e. time to display start up for
   unsigned int no_loops = 50;
+  
+  // Ensure that input is valid, should either be 1 for functional or 0 for not functional
+  assert(PWM_status == 1 || PWM_status == 0);
+  assert(servo_status == 1 || servo_status == 0);
+  assert(lidar_status == 1 || lidar_status == 0);
 
   // Set port B as output
   DDRB = 0xFF;

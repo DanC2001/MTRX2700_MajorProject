@@ -105,19 +105,7 @@ void scan_area(void){
     unsigned char min_column = 1; 	
 	  
 	  // Scan indefinitely
-	  while(1){
-	    tx.str[0] = '1';
-      tx.str[1] = '2';
-      tx.str[2] = '3';
-      tx.str[3] = '4';
-      tx.str[4] = '5';
-      tx.str[5] = '\r';
-      tx.str[6] = '\n';
-      tx.str[7] = '\0';
-      tx.length = 8;
-      tx.cursor = 0;
-      
-      send_mesage(SCI_port);  
+	  while(1){  
   
       // Loop through tilt angles
       for(i = 0; i < max_count_tilt; i++){
@@ -132,8 +120,8 @@ void scan_area(void){
           ms_delay(10);          
                     
           // Take measurement
-          //distance = getRange();
-          distance = 0.01;
+          distance = getRange();
+          //distance = 0.12;
           
           // Save measuremnt into corresponding location in the distance matrix
           distance_matrix[i][j] = distance;

@@ -3,55 +3,53 @@ Major Project for MTRX2700 at USYD in Semester 1 2021
 
 Presentation: 3rd June 2021
 
-Presentation slides for further information on this project:
+Link to presentation slides for editing:
 https://docs.google.com/presentation/d/1Vonpd3pOWvPvMa8eycqZICycjNNrLNRT4l6XoxO-a8A/edit?usp=sharing
 
 Andy Scott, 500443844
 
-      Primary responsibilities: LIDAR, Servos
-      Other responsibilities: LEDs, Speaker
+      Primary responsibilities: LIDAR
+      Other responsibilities: PWM, Timer
       
 Daniel Cook, 490394414
 
       Primary responsibilities: Timer & interrupts
-      Other responsibilities: Serial
+      Other responsibilities:
       
 Isabella Shaw, 500554852
 
-      Primary responsibilities: PWM signal, Presentation
-      Other responsibilities: Servos, documentation
+      Primary responsibilities: PWM & Servos, Presentation
+      Other responsibilities: Documentation
+
+# Project Summary
+This project provides an assistive technology for people operating from a wheelchair. The project incorporates a panning lidar
+system by using two perpendicular servos which scan the area in front of the wheelchair. A speaker and 7-seg are used as interfaces
+to alert the user when there is an object close by and provide a reccomendation on the direction of travel. An optional serial
+interface has also been included which prints a table of the lidar values to serial for testing means and verifying that the lidar
+is working as required.
+
       
 # User instructions      
-* Can optionally alter the server range and resolution by altering values defined in "servo.h", found in Demo folder
+* Set input values by changing lines xxx in main.c
 * Run the program to ensure input values are within range for each module
 * When stopping and restarting the program, press the reset button on the HCS12 board to ensure full functionality
-* main.c consists only of functions to initialise and set up each module and to begin scanning
+* 
 
 # Modules
 ## PWM & Servomotors
-      Location: Demo > servos.h
-
       High Level Code Information:
-            * The functions for the PWM and servos module can be found in Servo.c and main.c
+            * The functions for the PWM and servos module can be found in main.c and servo.c
             * This module takes a duty cycle and period input value and generates a square wave PWM signal based on these values
             * Alignment is set at left-aligned, but can be changed to centre- or right-alignment if necessary
             * The module will calculate the values needed to generate the correct signal, which will be used to move the servos
             * Channels 4 and 5 and channels 6 and 7 of the microcontroller are concatenated to control the tilt and pan servos, respectively
-            * Minimum and maximum pan and tilt values are set to suit our intended function for the servo module, but can be adjusted for other uses (lines 6 and 9, Servo.c)
+            * Minimum and maximum pan and tilt values are set to suit our intended function for the servo module, but can be adjusted for other uses
             * The servos take the PWM signal as an input in conjunction with the pan and tilt values to set the position of the servo
             * The PWM signal, pan and tilt values are then adjusted to cause the servos to continously move
-            * INPUTS:
-                  * Period value (line 12, Servo.c)
-                  * Duty cycle values (lines 28-36, Servo.c)
-                  * Prescaler and set up for clock A and B (lines 62 - 83, Servo.c)
-                  * Pan and tilt range (line 29 (pan) and line 28 (tilt), Servo.c)
-            * OUTPUTS:
-                  * Square wave PWM signal (line 80, Servo.c)
-                  * Servomotor movement (hardware)
       Limitations
             * Signal can only be generated within E-Clock limitations, as period and duty cycle are based on E-clock frequency (24MHz)
-            * Full range of motion of the servos is limited from 0 to 180 degrees on both pan and tilt
-	    * There is some time required more the servos to mechanically move into the new position
+            * Full range of motion of the servos is limited to ...
+            * ...
       Testing
             * Attach an oscilloscope to the relevant pins on the microcontroller to see the PWM signal and check it has the correct duty cycle and period
             * Set up an LED to flash with the PWM signal (LED is on when PWM is HIGH)
@@ -61,100 +59,47 @@ Isabella Shaw, 500554852
             * Tested different inputted pan and tilt values to ensure that servos were never directed to move past their mechanical stops
 
 ## Timer
-      Location Demo > isr_vectors.c and also Demo > lidar.h
-
       High Level Code Information:
-            * The functions for the timer module can be found in Lidar.c
+            * The functions for the timer module can be found in Lidar.c and main.c
             * This module utilises the timer channels on the HCS12 board to work in conjunction with the LIDAR sensor
             * The timer is used to calculate the time between rising and falling edges, signals generated by the LIDAR when an object is detected
             * This module takes the time data (initially measured in clock cycles) and converts it to a time measurement in milliseconds
-            * The time value can then be outputted to other modules, converted to a distance value (where 1 microsecond = 1cm
-            * INPUTS:
-                  * Prescaler (line 89, Lidar.c)
-                  * Overflow (line 89 and line 101, Lidar.c)
-                  * Channel presets (lines 88 - 94, Lidar.c)
-            * OUTPUTS:
-                  * Time between rising and falling edges, in milliseconds (line 22, Lidar.c)
+            * The time value can then be outputted to other modules, converted to a distance value (where 1 microsecond = 1cm)
       Limitations
             * Limits the use of the timer for other functions in a project
       Testing
-            * Use with known lengths (Function run time) to test timer is working and timer_to_time is working as intended.
-            * Test the overflow by enabling the overflow then checking its value after a few seconds to see it ahs increased. (or place breakpoint into the interrupt)
-            * Test with PH0 (LIDAR) to test input capture of signal
+            * 
             
 ## LIDAR
-      Location: Demo > lidar.h
-
       High Level Code Information:
-            * The functions for the timer module can be found in Lidar.c, main.c and scan_area.c
+            * The functions for the timer module can be found in Lidar.c and main.c
             * The LIDAR is a sensor that is used to detect obstacles in the surrounding environment
             * The sensor is mounted on the servos and scans the surrounds as the servo is being moved
             * The LIDAR module works in conjuction with the timer to collect and store data
             * This module calculates distance from time data from the timer and stores it in an array
             * The minimum value in the matrix (excluding 0s) is extracted and can be used as an output
-            * INPUTS:
-                  * Time information, in milliseconds (line 22, Lidar.c)
-            * OUTPUTS:
-                  * Distance information in metres (line 76, Lidar.c)
       Limitations
             * The LIDAR hardware can give false or zero readings
-            * If a new obstacle appears in the middle of a scan, it will not be picked up until the next scan
       Testing
             * Started by taking single measurements to a large object and then measured physical difference to ensure they matched
-            * Then tested it by taking measurements across a grid using servos and outputted the matrix to serial to ensure that results aligned with the         
-              environment being mapped
+            * Then tested it by taking measurements across a grid using servos and outputted the matrix to serial to ensure that results aligned with the                         environment being mapped
 
             
 ## Serial
-      Location: Demo > serial.h
-
       High Level Code Information:
-            * The functions for the serial module can be found in serial.c, main.c and scan_area.c
-            * All the functions for this module that are located in scan_area.c are involved in the tabularisation process
-            * The serial connection uses interrupts for each individual SCI maodule (0 or 1)
-            * The serial connection used for this project is SCI1 as SCI0 is used for communication to the board.
-            * This module uses structures to easily pass information back and forth between functions
-            * This module has two stucts labelled as buffers "rx" and "tx" for recieving and transmitting strings respectivly
-            * This module has 3 functions and 2 interupt routines
-                  * Byte create_SCI_config(void)
-                        * makes a config struct and fills it accordinly
-                        * calls set_SCI_config with the configuration
-                        * returns byte from set_SCI_Config
-                  * Byte set_SCI_config(SCI_config_t)
-                        * Sets the SCI configuration to the intended port and returns a signal depending on outcome
-                              * 1 for successful SC1 initiation
-                              * 0 for successful SC0 initiation
-                              * -1 (ESCIALLOC) for unsuccessful initiation
-                  * void send_message(Byte SCI_port)
-                        * initiates the message sending of the tx buffer 
-                        * Uses a byte to choose what SCI port (0 or 1) recommend using return of create_SCI_config as identifier
-                  * __interupt void SCIn_ISR(void)
-                        * Two functions SCI0_ISR and SCI1_ISR
-                        * each are called when the serial interrupt for the respective port is called
-                        * They continue to read/store or send a message bepending on the mode of the port
-                        * Once complete they turn off the Interupt.
+            * The functions for the timer module can be found in serial.c and main.c
       Limitations
-            * Serial is slow and can take time to output large strings, therefore if a program is fast enough is can overwrite a buffer before it is completed
-            * The buffer length is set to 512 characters and placing more than that into the tx.str will lead to it overflowing, if >512 characters is placed into the rx buffer it will loop back to the start. 
+            * 
       Testing
-            * Ensure that when configuring that the byte returned from create_SCI_config is not -1 (255) and is a 1 or 0
-            * Use a set string (e.g "12345\t6\n654321") place it into tx.str and set the length to 14 and call send_message to the configured port
-            * Test with functions adding to/from the buffer.
+            *            
             
 ## Speaker
-      Location: Demo > speaker.h
-
       High Level Code Information:
             * The functions for the timer module can be found in speaker.c
             * Tis module takes distance information from the LIDAR module and plays a beep at a pitch that is inversely proportional to the distance value
                   * The closer the obstacle is, the higher the pitch
-            * Each time a row in the distance matrix is filled, a beep sounds from the speaker at a pitch calculated from the last minimum value inputted to the 
-              module from the LIDAR module
+            * Each time a row in the distance matrix is filled, a beep sounds from the speaker at a pitch calculated from the last minimum value inputted to the                 module from the LIDAR module
             * When the matrix is full, the minimum value is sent to this module and a new pitch is calculated
-            * INPUTS:
-                  * Distance from nearest object, in metres (line 30, Speaker.c)
-            * OUTPUTS:
-                  * Beeping sound (hardware)
       Limitations
             * Speaker cannot sound while the servos and LIDAR are scanning, only when they have finished one scan, so beeping cannot be continuous
       Testing
@@ -164,24 +109,17 @@ Isabella Shaw, 500554852
 
             
 ## LEDs
-      Location: Demo > LED.h
-
       High Level Code Information:
-            * The functions for the timer module can be found in LED.c and main.c
+            * The functions for the timer module can be found in LED.c
             * This module takes the index within the distance matrix of the minimum distance value from the LIDAR as an input
             * The index is used to determine if the obstacle is on the left or the right of the sensor
             * The 4, 7-seg LEDs will display a message (LEFT or RIGT) telling the user where to turn to avoid the obstacle
             * If the object is directly in front of the person, LEFT will be displayed (in conjunction with Australian social norms)
                   * This can be changed for use in other countries to display RIGT by changing lines xxxx
             * After exiting the module, an L or R will remain displayed on the first LED until the next full scan is complete
-            * INPUTS:
-                  * Location of the nearest object (line 88, LED.c)
-            * OUTPUTS:
-                  * LEFT or RIGHT on the LEDs to indicate where the user should move (hardware)
       Limitations
             * Only 4 7-seg LEDs are available (hence having to display "rigt" instead of "right")
             * Only 1 LED can remain on while the servos and LIDAR continue to scan
       Testing
             * Basic functionality easily tested using visual appearance
-            * Tested that the indicated direction was correct by moving an object horizontally across the field of view of the lidar while in operation and        
-              confirmed that the recommended direction changed
+            * Tested that the indicated direction was correct by moving an object horizontally across the field of view of the lidar while in operation and                       confirmed that the recommended direction changed

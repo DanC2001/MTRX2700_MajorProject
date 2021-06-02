@@ -71,7 +71,9 @@ Isabella Shaw, 500554852
       Limitations
             * Limits the use of the timer for other functions in a project
       Testing
-            * 
+            * Use with known lengths (Function run time) to test timer is working and timer_to_time is working as intended.
+            * Test the overflow by enabling the overflow then checking its value after a few seconds to see it ahs increased. (or place breakpoint into the interrupt)
+            * Test with PH0 (LIDAR) to test input capture of signal
             
 ## LIDAR
       High Level Code Information:
@@ -97,11 +99,35 @@ Isabella Shaw, 500554852
 ## Serial
       High Level Code Information:
             * The functions for the timer module can be found in serial.c and main.c
+            * The serial connection uses interrupts for each individual SCI maodule (0 or 1)
+            * The serial connection used for this project is SCI1 as SCI0 is used for communication to the board.
+            * This module uses structures to easily pass information back and forth between functions
+            * This module has two stucts labelled as buffers "rx" and "tx" for recieving and transmitting strings respectivly
+            * This module has 3 functions and 2 interupt routines
+                  * Byte create_SCI_config(void)
+                        * makes a config struct and fills it accordinly
+                        * calls set_SCI_config with the configuration
+                        * returns byte from set_SCI_Config
+                  * Byte set_SCI_config(SCI_config_t)
+                        * Sets the SCI configuration to the intended port and returns a signal depending on outcome
+                              * 1 for successful SC1 initiation
+                              * 0 for successful SC0 initiation
+                              * -1 (ESCIALLOC) for unsuccessful initiation
+                  * void send_message(Byte SCI_port)
+                        * initiates the message sending of the tx buffer 
+                        * Uses a byte to choose what SCI port (0 or 1) recommend using return of create_SCI_config as identifier
+                  * __interupt void SCIn_ISR(void)
+                        * Two functions SCI0_ISR and SCI1_ISR
+                        * each are called when the serial interrupt for the respective port is called
+                        * They continue to read/store or send a message bepending on the mode of the port
+                        * Once complete they turn off the Interupt.
       Limitations
-            * 
+            * Serial is slow and can take time to output large strings, therefore if a program is fast enough is can overwrite a buffer before it is completed
+            * The buffer length is set to 512 characters and placing more than that into the tx.str will lead to it overflowing, if >512 characters is placed into the rx buffer it will loop back to the start. 
       Testing
-            *            
-            
+            * Ensure that when configuring that the byte returned from create_SCI_config is not -1 (255) and is a 1 or 0
+            * Use a set string (e.g "12345\t6\n654321") place it into tx.str and set the length to 14 and call send_message to the configured port
+            * Test with functions adding to/from the buffer.
 ## Speaker
       High Level Code Information:
             * The functions for the timer module can be found in speaker.c

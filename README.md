@@ -29,11 +29,12 @@ interface has also been included which prints a table of the lidar values to ser
 is working as required.
 
       
-# User instructions      
+# User instructions and Troubleshooting    
 * Set input values for different modules by changing the lines in the relevant files, as stated below
 * Run the program to ensure input values are within range for each module
 * When stopping and restarting the program, press the reset button on the HCS12 board to ensure full functionality
 * main.c consists only of functions to initialise and set up each module and to begin scanning
+* If the hardware doesn't work, check all the power connections to the board and PTU, and press the reset button on the HCS12 board
 
 # Modules
 ## PWM & Servomotors

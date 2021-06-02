@@ -60,7 +60,9 @@ void convertTimerToTime(int prescalar, unsigned timer, unsigned overflow, float*
     case 0x07:  //111
       perStep = Eclock/128;
       break;
-      
+    
+    default:
+      assert(0);  
    }
    
    time = (timer + (overflow * 65536u)) * (1/perStep);  // Seconds
@@ -95,7 +97,7 @@ void convertTimeToDist(float* Output){
     TCTL4 = 0x04;       // Capture on RISING edge only of PT1
     TFLG1 = 0x02;       // Write a 1 to the interrupt flag register for PT1, clearing it
     
-    PTH_PTH0   = 0;     // Trigger the Lidar
+    PTH_PTH0 = 0;     // Trigger the Lidar
     
     // Wait for rising edge 
     

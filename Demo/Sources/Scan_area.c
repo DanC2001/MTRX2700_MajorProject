@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
 #include "derivative.h"      /* derivative-specific definitions */
 #include "Servo.h"
@@ -22,6 +23,8 @@ static char * matrix2D_to_string(const float *matrix, size_t rows, size_t cols){
   size_t r = 0, c = 0, size = 0;
   char *buffer = NULL, *p = NULL;
   char buf[256];
+  
+  assert(rows<=0 || cols<=0);
   
   // Calculates maximum width for each column
   col_width = (int *)calloc(cols, sizeof(*col_width));
@@ -164,8 +167,9 @@ void scan_area(void){
       }
       
       s = matrix2D_to_string((const float *)distance_matrix, ARRAY_SIZE(distance_matrix), ARRAY_SIZE(distance_matrix[0]));
-      strcpy(tx.str, s);
       tx.length = strlen(s);
+      assert(tx.length <=512);
+      strcpy(tx.str, s);
       tx.cursor = 0;
       send_mesage(SCI_port);
       

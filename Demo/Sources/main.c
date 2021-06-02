@@ -33,6 +33,9 @@ void main(void) {
   	
   	// Initialise Serial Port 1
   	SCI_status  = create_SCI_config(1);
+  	
+  	// Check to see if an error was thrown while initializing serial
+  	assert(SCI_status != ESCIALLOC);
   		
   	// Enable interrupts for lidar
   	EnableInterrupts;

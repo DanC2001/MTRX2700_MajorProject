@@ -13,7 +13,7 @@ void initialise_LED(unsigned char PWM_status, unsigned char servo_status, unsign
 
 // This function displays either a left facing or right facing arrow to the 7-segs
 // Decision is based of where the min distance is relative to central point
-void LED_display(unsigned int min_column, unsigned int central_column);
+void LED_display(unsigned char min_column, unsigned char central_column);
 
 // This function creates a time delay of the inputted number of milliseconds
 void millisecond_delay(unsigned int time_ms);

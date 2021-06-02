@@ -37,6 +37,8 @@ is working as required.
 
 # Modules
 ## PWM & Servomotors
+      Location: Demo > servos.h
+
       High Level Code Information:
             * The functions for the PWM and servos module can be found in main.c and servo.c
             * This module takes a duty cycle and period input value and generates a square wave PWM signal based on these values
@@ -59,6 +61,8 @@ is working as required.
             * Tested different inputted pan and tilt values to ensure that servos were never directed to move past their mechanical stops
 
 ## Timer
+      Location: Demo > isr_vectors.c and Demo > lidar.h
+
       High Level Code Information:
             * The functions for the timer module can be found in Lidar.c and main.c
             * This module utilises the timer channels on the HCS12 board to work in conjunction with the LIDAR sensor
@@ -71,6 +75,8 @@ is working as required.
             * 
             
 ## LIDAR
+      Location: Demo > lidar.h
+
       High Level Code Information:
             * The functions for the timer module can be found in Lidar.c and main.c
             * The LIDAR is a sensor that is used to detect obstacles in the surrounding environment
@@ -86,6 +92,8 @@ is working as required.
 
             
 ## Serial
+      Location: Demo > serial.h
+
       High Level Code Information:
             * The functions for the timer module can be found in serial.c and main.c
       Limitations
@@ -94,6 +102,8 @@ is working as required.
             *            
             
 ## Speaker
+      Location: Demo > speaker.h
+
       High Level Code Information:
             * The functions for the timer module can be found in speaker.c
             * Tis module takes distance information from the LIDAR module and plays a beep at a pitch that is inversely proportional to the distance value
@@ -109,6 +119,8 @@ is working as required.
 
             
 ## LEDs
+      Location: Demo > LED.h
+
       High Level Code Information:
             * The functions for the timer module can be found in LED.c
             * This module takes the index within the distance matrix of the minimum distance value from the LIDAR as an input

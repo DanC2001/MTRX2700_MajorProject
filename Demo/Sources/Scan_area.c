@@ -166,11 +166,22 @@ void scan_area(void){
         }
       }
       
+      // Converts the matrix into a string
       s = matrix2D_to_string((const float *)distance_matrix, ARRAY_SIZE(distance_matrix), ARRAY_SIZE(distance_matrix[0]));
+      
+      // Get length of the string and set it to the tx length
       tx.length = strlen(s);
+      
+      // Ensure that the length is less than the buffer length
       assert(tx.length <=512);
+      
+      // Copy the string into the transmission buffer
       strcpy(tx.str, s);
+      
+      // Set the transmission cursor to 0
       tx.cursor = 0;
+      
+      // Initiate the message transmission
       send_mesage(SCI_port);
       
       // Display reccomended direction of travel to the user

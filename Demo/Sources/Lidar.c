@@ -62,6 +62,7 @@ void convertTimerToTime(int prescalar, unsigned timer, unsigned overflow, float*
       break;
     
     default:
+      // Default error if prescalar isn't correct
       assert(0);  
    }
    

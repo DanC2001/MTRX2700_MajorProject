@@ -87,7 +87,8 @@ is working as required.
             * Limits the use of the timer for other functions in a project
       Testing
             * Use with known lengths (Function run time) to test timer is working and timer_to_time is working as intended.
-            * Test the overflow by enabling the overflow then checking its value after a few seconds to see it ahs increased. (or place breakpoint into the interrupt)
+            * Test the overflow by enabling the overflow then checking its value after a few seconds to see it ahs increased. (or place breakpoint into the 
+            interrupt)
             * Test with PH0 (LIDAR) to test input capture of signal            
 ## LIDAR
       Location: Demo > lidar.h
@@ -109,7 +110,8 @@ is working as required.
 
       Testing
             * Started by taking single measurements to a large object and then measured physical difference to ensure they matched
-            * Then tested it by taking measurements across a grid using servos and outputted the matrix to serial to ensure that results aligned with the                         environment being mapped
+            * Then tested it by taking measurements across a grid using servos and outputted the matrix to serial to ensure that results aligned with the        
+            environment being mapped
 
             
 ## Serial
@@ -153,7 +155,8 @@ is working as required.
             * The functions for the timer module can be found in speaker.c
             * Tis module takes distance information from the LIDAR module and plays a beep at a pitch that is inversely proportional to the distance value
                   * The closer the obstacle is, the higher the pitch
-            * Each time a row in the distance matrix is filled, a beep sounds from the speaker at a pitch calculated from the last minimum value inputted to the                 module from the LIDAR module
+            * Each time a row in the distance matrix is filled, a beep sounds from the speaker at a pitch calculated from the last minimum value inputted to the 
+            module from the LIDAR module
             * When the matrix is full, the minimum value is sent to this module and a new pitch is calculated
              * INPUTS:
                   * Distance from nearest object, in metres (line 30, Speaker.c)
@@ -187,4 +190,5 @@ is working as required.
             * Only 1 LED can remain on while the servos and LIDAR continue to scan
       Testing
             * Basic functionality easily tested using visual appearance
-            * Tested that the indicated direction was correct by moving an object horizontally across the field of view of the lidar while in operation and                       confirmed that the recommended direction changed
+            * Tested that the indicated direction was correct by moving an object horizontally across the field of view of the lidar while in operation and       
+            confirmed that the recommended direction changed
